@@ -1,0 +1,15 @@
+{
+  "react-native-google-mobile-ads": {
+    "ios_app_id": "ca-app-pub-6422592423352564~7519899737",
+    "android_app_id": "ca-app-pub-6422592423352564~6022605332",
+    "user_tracking_usage_description": "This identifier will be used to deliver personalized ads to you."
+  },
+  "expo": {
+    "ios": {
+      "buildNumber": "6"
+    },
+    "android": {
+      "versionCode": 4
+    }
+  }
+}

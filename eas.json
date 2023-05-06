@@ -1,0 +1,108 @@
+{
+  "cli": {
+    "version": ">= 3.8.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "API_URL": "http://192.168.1.5:8000/api",
+        "APP_URL": "tuneswap://home",
+        "ADMOB_APP_ID": "ca-app-pub-6422592423352564~7519899737",
+        "ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/5173734155",
+        "ADMOB_INTER_ID": "ca-app-pub-6422592423352564/1039048020",
+        "ADMOB_REWARDED_ID": "ca-app-pub-6422592423352564/8608057029",
+        "SPOTIFY_REDIRECT_URL": "tuneswap://home",
+        "ANDROID_ADMOB_APP_ID": "ca-app-pub-6422592423352564~6022605332",
+        "ANDROID_ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/4539138866",
+        "ANDROID_ADMOB_INTER_ID": "ca-app-pub-6422592423352564/8672172602"
+      }
+    },
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "API_URL": "http://192.168.1.5:8000/api",
+        "APP_URL": "tuneswap://home",
+        "ADMOB_APP_ID": "ca-app-pub-6422592423352564~7519899737",
+        "ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/5173734155",
+        "ADMOB_INTER_ID": "ca-app-pub-6422592423352564/1039048020",
+        "ADMOB_REWARDED_ID": "ca-app-pub-6422592423352564/8608057029",
+        "SPOTIFY_REDIRECT_URL": "tuneswap://home",
+        "ANDROID_ADMOB_APP_ID": "ca-app-pub-6422592423352564~6022605332",
+        "ANDROID_ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/4539138866",
+        "ANDROID_ADMOB_INTER_ID": "ca-app-pub-6422592423352564/8672172602"
+      }
+    },
+    "preview-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "API_URL": "https://api.tuneswap.app/api",
+        "APP_URL": "tuneswap://home",
+        "ADMOB_APP_ID": "ca-app-pub-6422592423352564~7519899737",
+        "ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/5173734155",
+        "ADMOB_INTER_ID": "ca-app-pub-6422592423352564/1039048020",
+        "ADMOB_REWARDED_ID": "ca-app-pub-6422592423352564/8608057029",
+        "SPOTIFY_REDIRECT_URL": "tuneswap://home",
+        "ANDROID_ADMOB_APP_ID": "ca-app-pub-6422592423352564~6022605332",
+        "ANDROID_ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/4539138866",
+        "ANDROID_ADMOB_INTER_ID": "ca-app-pub-6422592423352564/8672172602"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "API_URL": "https://api.tuneswap.app/api",
+        "APP_URL": "tuneswap://home",
+        "ADMOB_APP_ID": "ca-app-pub-6422592423352564~7519899737",
+        "ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/5173734155",
+        "ADMOB_INTER_ID": "ca-app-pub-6422592423352564/1039048020",
+        "ADMOB_REWARDED_ID": "ca-app-pub-6422592423352564/8608057029",
+        "SPOTIFY_REDIRECT_URL": "tuneswap://home",
+        "ANDROID_ADMOB_APP_ID": "ca-app-pub-6422592423352564~6022605332",
+        "ANDROID_ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/4539138866",
+        "ANDROID_ADMOB_INTER_ID": "ca-app-pub-6422592423352564/8672172602"
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "API_URL": "https://api.tuneswap.app/api",
+        "APP_URL": "tuneswap://home",
+        "ADMOB_APP_ID": "ca-app-pub-6422592423352564~7519899737",
+        "ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/5173734155",
+        "ADMOB_INTER_ID": "ca-app-pub-6422592423352564/1039048020",
+        "ADMOB_REWARDED_ID": "ca-app-pub-6422592423352564/8608057029",
+        "SPOTIFY_REDIRECT_URL": "tuneswap://home",
+        "ANDROID_ADMOB_APP_ID": "ca-app-pub-6422592423352564~6022605332",
+        "ANDROID_ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/4539138866",
+        "ANDROID_ADMOB_INTER_ID": "ca-app-pub-6422592423352564/8672172602"
+      },
+      "android": {
+        "image": "latest"
+      },
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {
+
+    }
+  }
+}

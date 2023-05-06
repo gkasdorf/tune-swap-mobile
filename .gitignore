@@ -1,0 +1,29 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.idea/
+.env.dev
+.env.prod
+
+android/*
+ios/*
+
+# macOS
+.DS_Store
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+*.swp
+.env
+ios/tuneswapios.xcodeproj/project.pbxproj
+*.pbxproj
+*.ipa
+*.tar.gz
