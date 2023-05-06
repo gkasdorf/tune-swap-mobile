@@ -15,8 +15,7 @@ const bannerAdUnitId = __DEV__ ? TestIds.BANNER : Constants.expoConfig.extra.adm
 const interstitialAdUnitId = __DEV__ ? TestIds.INTERSTITIAL : Constants.expoConfig.extra.admobInterId;
 
 const interstitial = InterstitialAd.createForAdRequest(interstitialAdUnitId, {
-    // TODO Set whether to show personalized ads
-    requestNonPersonalizedAdsOnly: false,
+    requestNonPersonalizedAdsOnly: true,
     keywords: ["technology", "music", "fashion", "clothing", "games", "social"]
 });
 
