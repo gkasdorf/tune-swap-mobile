@@ -1,19 +1,14 @@
 import Api from "../Api";
 import ApiResponse from "../ApiResponse";
-
-export type SwapData = {
-    from_service: string,
-    to_service: string,
-    from_playlist_id: string,
-    playlist_name: string,
-    description: string
-};
+import {StartSwapRequest} from "./types/SwapApiRequests";
+import {GetAllSwapsResponse, GetSwapResponse, SongsNotFoundResponse, StartSwapResponse} from "./types/SwapApiResponses";
+import {Swap} from "./types/SwapTypes";
 
 class SwapApi {
-    public static start = (swap: SwapData): Promise<ApiResponse> => {
+    public static start = async (data: StartSwapRequest): Promise<StartSwapResponse> => {
         const api = new Api("/v2/swap/start");
 
-        return api.post(swap);
+        return await api.post(data) as StartSwapResponse;
     };
 
     public static getAll = async (): Promise<object[]> => {
@@ -24,13 +19,13 @@ class SwapApi {
             offset: "0"
         };
 
-        const res = await api.get(data);
+        const res = await api.get(data) as GetAllSwapsResponse;
 
         const swaps = [];
         let count = 0;
         let total = 0;
 
-        res.data.swaps.forEach((item) => {
+        res.data.swaps.forEach((item: Swap) => {
             if(count % 4 === 0) {
                 swaps.push({key: total, type: "ad"});
                 total++;
@@ -45,16 +40,16 @@ class SwapApi {
         return swaps;
     };
 
-    public static get = (id): Promise<ApiResponse> => {
+    public static get = async (id): Promise<GetSwapResponse> => {
         const api = new Api(`/v2/swap/${id}`);
 
-        return api.get();
+        return await api.get() as GetSwapResponse;
     };
 
-    public static getNotFound = (id): Promise<ApiResponse> => {
+    public static getNotFound = async (id): Promise<SongsNotFoundResponse> => {
         const api = new Api(`/v2/swap/${id}/notfound`);
 
-        return api.get();
+        return await api.get() as SongsNotFoundResponse;
     };
 }
 

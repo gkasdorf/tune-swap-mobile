@@ -42,12 +42,12 @@ const ViewSwapScreen = () => {
 
     useEffect(() => {
         if(!loading && adLoaded) {
-            interstitial.show();
+            interstitial.show().then();
         }
     }, [loading, adLoaded]);
 
     useFocusEffect(useCallback(() => {
-        loadSwap();
+        loadSwap().then();
 
         if(isNew) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
