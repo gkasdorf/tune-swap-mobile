@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {Stack, useFocusEffect, useRouter, useSearchParams} from "expo-router";
 import SwapApi from "../../../api/swap/SwapApi";
-import {Alert, ScrollView, StyleSheet, View} from "react-native";
+import {Alert, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
 import {HeaderBackButton} from "@react-navigation/elements";
 import {Button, LinearProgress, Text} from "@rneui/themed";
 import StatusIcon, {StatusIconVariant} from "../../../ui/StatusIcon";
@@ -9,6 +9,7 @@ import LoadingModal from "../../../ui/LoadingModal";
 import SwapStatus from "../../../api/enums/SwapStatus";
 import {AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
 import Constants from "expo-constants";
+import {Icon} from "@rneui/base";
 
 const bannerAdUnitId = __DEV__ ? TestIds.BANNER : Constants.expoConfig.extra.admobBannerId;
 // eslint-disable-next-line no-undef
@@ -95,6 +96,12 @@ const ViewSwapScreen = () => {
         }
     };
 
+    const onNotFoundPress = (): void => {
+        if(swap.songs_not_found < 1) return;
+
+        router.push({pathname: "/home/swap/notFound", params: {id: id}});
+    };
+
     return (
         <ScrollView style={styles.main}>
             {
@@ -150,8 +157,10 @@ const ViewSwapScreen = () => {
                                     <Text style={styles.swapInfoSubtitle}>{swap.songs_found}</Text>
                                 </View>
                                 <View>
-                                    <Text h4>Not Found</Text>
-                                    <Text style={styles.swapInfoSubtitle}>{swap.songs_not_found}</Text>
+                                    <TouchableOpacity onPress={onNotFoundPress}>
+                                        <Text h4>Not Found</Text>
+                                        <Text style={styles.swapInfoSubtitle}>{swap.songs_not_found}</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                             {

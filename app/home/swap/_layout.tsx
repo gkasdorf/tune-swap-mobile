@@ -10,6 +10,7 @@ const SwapsLayout = () => {
             <Stack.Screen name={"newSwap/stepTwo"} options={{title: "Step Two"}} />
             <Stack.Screen name={"newSwap/stepThree"} options={{title: "Step Three"}} />
             <Stack.Screen name={"newSwap/stepFour"} options={{title: "Step Four"}} />
+            <Stack.Screen name={"notFound"} options={{title: "Not Found"}} />
         </Stack>
     );
 };
