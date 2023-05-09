@@ -79,7 +79,7 @@ const Login = () => {
 
             if(!resp.success) {
                 console.log("Error");
-                Alert.alert("Error", resp.data.message);
+                Alert.alert("Error", resp.message);
                 return;
             }
 

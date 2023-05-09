@@ -1,9 +1,9 @@
-import ApiResponse from "../ApiResponse";
 import Api from "../Api";
 import {Platform} from "react-native";
+import {DisableNotificationsResponse, EnableNotificationsResponse} from "./types/responses/NotificationsApiResponses";
 
 class NotificationsApi {
-    public static enableNotifications = (deviceId: string): Promise<ApiResponse> => {
+    public static enableNotifications = async (deviceId: string): Promise<EnableNotificationsResponse> => {
         let url: string;
 
         if(Platform.OS === "ios") {
@@ -18,10 +18,10 @@ class NotificationsApi {
             token: deviceId
         };
 
-        return api.get(data);
+        return await api.get(data) as EnableNotificationsResponse;
     };
 
-    public static disableNotifications = (deviceId: string): Promise<ApiResponse> => {
+    public static disableNotifications = async (deviceId: string): Promise<DisableNotificationsResponse> => {
         let url: string;
 
         if(Platform.OS === "ios") {
@@ -36,7 +36,7 @@ class NotificationsApi {
             token: deviceId
         };
 
-        return api.get(data);
+        return await api.get(data) as DisableNotificationsResponse;
     };
 }
 

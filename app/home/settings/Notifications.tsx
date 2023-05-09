@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import {Switch} from "@rneui/themed";
 import NotificationsApi from "../../../api/user/NotificationsApi";

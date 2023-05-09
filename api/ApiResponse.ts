@@ -1,28 +1,30 @@
+interface DefaultResponse {
+    success: boolean;
+    status: number;
+    data: ResponseData;
+}
+
+interface ResponseData {
+    message?: string;
+    success?: boolean;
+    [key: string]: string|number|boolean|object|null;
+}
+
 class ApiResponse {
-    public reqSuccess = false;
     public status: number = null;
-    public data: any = null;
+    public data: ResponseData = null;
     public message: string = null;
     public success = false;
 
+    /**
+     * @param res DefaultResponse
+     */
+    constructor(res: DefaultResponse) {
+        Object.assign(this, res);
 
-    constructor(res: {success: boolean, status: number, data: {message?: string, success: boolean}}) {
-        this.reqSuccess = res.success;
-        this.status = res.status;
-        this.data = res.data;
-        this.message = res.data.message;
+        this.message = this.data.message;
         this.success = (res.success && res.data.success);
     }
-
-    public isError = (): boolean => {
-        const first: string = String(this.status).charAt(0);
-        return first === "5";
-    };
-
-    public isFail = (): boolean => {
-        const first: string = String(this.status).charAt(0);
-        return first === "4";
-    };
 }
 
 export default ApiResponse;

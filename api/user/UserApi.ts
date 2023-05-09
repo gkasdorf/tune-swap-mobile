@@ -1,51 +1,46 @@
 import ApiResponse from "../ApiResponse";
 import Api from "../Api";
+import {IsRunningResponse, LoginResponse, SignupResponse, VerifyResponse} from "./types/responses/UserApiResponses";
+import {AppleLoginRequest, LoginRequest, SignupRequest} from "./types/requests/UserApiRequests";
 
 class UserApi {
     /**
      * Sends a login request
-     * @param email
-     * @param password
+     * @param data {LoginRequest}
      */
-    public static login = (email: string, password: string): Promise<ApiResponse> => {
+    public static login = async (data: LoginRequest): Promise<LoginResponse> => {
         const api: Api = new Api("/v2/user/login");
 
-        const data = {
-            email: email,
-            password: password
-        };
-
-        return api.post(data);
+        return await api.post(data) as LoginResponse;
     };
 
     /**
      * Sends a login with apple request
-     * @param code
-     * @param name
+     * @param data {AppleLoginRequest}
      */
-    public static loginWithApple = (code: string, name: string = null): Promise<ApiResponse> => {
+    public static loginWithApple = async (data: AppleLoginRequest): Promise<LoginResponse> => {
         const api: Api = new Api("/v2/user/login/apple");
 
-        return api.post({code, name});
+        return await api.post(data) as LoginResponse;
     };
 
     /**
      * Sends the register user request
-     * @param data
+     * @param data {SignupRequest}
      */
-    public static register = (data: {name: string, email: string, password: string, passwordAgain: string}): Promise<ApiResponse> => {
+    public static register = async (data: SignupRequest): Promise<SignupResponse> => {
         const api: Api = new Api("/v2/user/signup");
 
-        return api.post(data);
+        return await api.post(data) as SignupResponse;
     };
 
     /**
      * Verify the current user token is valid
      */
-    public static verify = async (): Promise<ApiResponse> => {
+    public static verify = async (): Promise<VerifyResponse> => {
         const api: Api = new Api("/v2/user/verify");
 
-        const res: ApiResponse = await api.get();
+        const res: VerifyResponse = await api.get() as VerifyResponse;
 
         if(res.status === 401) {
             this.signOut();
@@ -56,44 +51,24 @@ class UserApi {
     };
 
     private static signOut = () => {
-        // Do the sign out
+        //TODO
     };
 
     /**
      * Sends a delete user request
      */
-    public static delete = (): Promise<ApiResponse> => {
+    public static delete = async (): Promise<ApiResponse> => {
         const api: Api = new Api("/v2/user/delete");
 
         const data = {};
 
-        return api.post(data);
+        return await api.post(data) as ApiResponse;
     };
 
-    public static isRunning = (): Promise<ApiResponse> => {
+    public static isRunning = async (): Promise<IsRunningResponse> => {
         const api: Api = new Api("/v2/user/running");
 
-        return api.get();
-    };
-
-    public static enableNotifications = (deviceId: string): Promise<ApiResponse> => {
-        const api: Api = new Api("/v2/user/notifications/ios/enable");
-
-        const data = {
-            token: deviceId,
-        };
-
-        return api.get(data);
-    };
-
-    public static disableNotifications = (deviceId: string): Promise<ApiResponse> => {
-        const api: Api = new Api("/v2/user/notifications/ios/disable");
-
-        const data = {
-            token: deviceId
-        };
-
-        return api.get(data);
+        return await api.get() as IsRunningResponse;
     };
 }
 
