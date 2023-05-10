@@ -12,28 +12,28 @@ const StatusIcon = ({variant}: StatusIconProps) => {
     const iconStyles: object[] = [styles.icon];
     let icon: string[];
 
-    switch(variant) {
-    case "success":
-        iconStyles.push(styles.success);
-        icon = ["done", "material"];
-        break;
-    case "error":
-        iconStyles.push(styles.error);
-        icon = ["warning", "material"];
-        break;
-    case "pending":
-        iconStyles.push(styles.pending);
-        icon = ["sync", "material"];
-        break;
+    switch (variant) {
+        case "success":
+            iconStyles.push(styles.success);
+            icon = ["done", "material"];
+            break;
+        case "error":
+            iconStyles.push(styles.error);
+            icon = ["warning", "material"];
+            break;
+        case "pending":
+            iconStyles.push(styles.pending);
+            icon = ["sync", "material"];
+            break;
     }
 
     return (
         <View style={iconStyles}>
             {
                 variant === "pending" ? (
-                    <ActivityIndicator size={"large"} color={"white"} animating={variant === "pending"} />
+                    <ActivityIndicator size={"large"} color={"white"} animating={variant === "pending"}/>
                 ) : (
-                    <Icon name={icon[0]} size={50} color={"white"} type={icon[1]} />
+                    <Icon name={icon[0]} size={50} color={"white"} type={icon[1]}/>
                 )
             }
         </View>

@@ -32,21 +32,21 @@ const ViewShareScreen = () => {
 
     useEffect(() => {
         return () => {
-            if(reload) clearInterval(reload);
-            if(unsubscribe) unsubscribe();
+            if (reload) clearInterval(reload);
+            if (unsubscribe) unsubscribe();
         };
     }, []);
 
     useEffect(() => {
-        if(!loading && adLoaded) {
-            interstitial.show();
+        if (!loading && adLoaded) {
+            interstitial.show().then();
         }
     }, [loading, adLoaded]);
 
     useFocusEffect(useCallback(() => {
-        loadCopy();
+        loadCopy().then();
 
-        if(isNew) {
+        if (isNew) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
                 setAdLoaded(true);
             });
@@ -58,17 +58,17 @@ const ViewShareScreen = () => {
     const loadCopy = async () => {
         const res = await ShareApi.getCopy(id.toString());
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
         }
 
-        if(res.data.copy.status !== SwapStatus.COMPLETED && res.data.copy.status !== SwapStatus.ERROR && !reload) {
+        if (res.data.copy.status !== SwapStatus.COMPLETED && res.data.copy.status !== SwapStatus.ERROR && !reload) {
             reload = setInterval(loadCopy, 5000);
         }
 
-        if((res.data.copy.status === SwapStatus.COMPLETED || res.data.copy.status === SwapStatus.ERROR) && reload) {
+        if ((res.data.copy.status === SwapStatus.COMPLETED || res.data.copy.status === SwapStatus.ERROR) && reload) {
             clearInterval(reload);
             reload = null;
         }
@@ -78,13 +78,13 @@ const ViewShareScreen = () => {
     };
 
     const getStatusVariant = (status: SwapStatus): StatusIconVariant => {
-        switch(status) {
-        case SwapStatus.COMPLETED:
-            return "success";
-        case SwapStatus.ERROR:
-            return "error";
-        default:
-            return "pending";
+        switch (status) {
+            case SwapStatus.COMPLETED:
+                return "success";
+            case SwapStatus.ERROR:
+                return "error";
+            default:
+                return "pending";
         }
     };
 
@@ -112,17 +112,18 @@ const ViewShareScreen = () => {
                         <Text h3 style={{textAlign: "center"}}>{copy.share.playlist.name}</Text>
                         <Text style={{textAlign: "center"}}>Playlist by {copy.share.playlist.user.name}</Text>
                         <View style={styles.status}>
-                            <StatusIcon variant={getStatusVariant(copy.status)} />
+                            <StatusIcon variant={getStatusVariant(copy.status)}/>
 
                             {
                                 copy.status === SwapStatus.ERROR && (
-                                    <Text style={{marginTop: 10}}>There was an error creating the playlist. Please try again later.</Text>
+                                    <Text style={{marginTop: 10}}>There was an error creating the playlist. Please try again
+                                        later.</Text>
                                 ) || copy.status === SwapStatus.COMPLETED && (
                                     <Text style={{marginTop: 10}}>Your playlist has been created!</Text>
                                 ) || (
                                     <>
                                         <Text style={{marginTop: 10}}>We are creating your playlist. Please wait...</Text>
-                                        <LinearProgress style={{marginTop: 10}} value={copy.progress} />
+                                        <LinearProgress style={{marginTop: 10}} value={copy.progress}/>
                                     </>
                                 )
                             }
@@ -137,7 +138,7 @@ const ViewShareScreen = () => {
                     </View>
                 )
             }
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
         </ScrollView>
     );
 };

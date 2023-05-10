@@ -12,15 +12,15 @@ const CopiesScreen = () => {
     const router = useRouter();
 
     useFocusEffect(useCallback(() => {
-        loadCopies();
+        loadCopies().then();
     }, []));
 
     const loadCopies = async (pull = false) => {
-        if(!pull) setLoading(true);
+        if (!pull) setLoading(true);
 
         const res = await ShareApi.getCopies();
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -31,7 +31,7 @@ const CopiesScreen = () => {
     };
 
     const onCopyPress = (id: string): void => {
-        router.push({pathname: "/home/share/viewCopy", params: { id: id }});
+        router.push({pathname: "/home/share/viewCopy", params: {id: id}});
     };
 
     const copyItem = (obj) => {
@@ -43,14 +43,14 @@ const CopiesScreen = () => {
                 <ListItem.Content>
                     <ListItem.Title>{copy.share.playlist.name}</ListItem.Title>
                 </ListItem.Content>
-                <ListItem.Chevron />
+                <ListItem.Chevron/>
             </ListItem>
         );
     };
 
     return (
         <View style={styles.main}>
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             {
                 !copies || copies.length < 1 && (
                     <View style={{padding: 20}}>
@@ -68,7 +68,7 @@ const CopiesScreen = () => {
                         initialNumToRender={15}
                         windowSize={15}
                         refreshControl={
-                            <RefreshControl refreshing={loading} onRefresh={() => loadCopies(true)} />
+                            <RefreshControl refreshing={loading} onRefresh={() => loadCopies(true)}/>
                         }
                     />
                 )

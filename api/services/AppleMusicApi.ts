@@ -1,10 +1,11 @@
 import Api from "../Api";
+import {GetUserPlaylistsResponse} from "./types/GetUserPlaylistsResponse";
 
 class AppleMusicApi {
-    static getUserPlaylists = () => {
+    static getUserPlaylists = async (): Promise<GetUserPlaylistsResponse> => {
         const api = new Api("/v2/applemusic/me/playlists");
 
-        return api.get();
+        return await api.get() as GetUserPlaylistsResponse;
     };
 }
 

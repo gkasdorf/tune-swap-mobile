@@ -3,6 +3,7 @@ import {useFocusEffect, useSearchParams} from "expo-router";
 import SwapApi from "../../../api/swap/SwapApi";
 import {Alert, FlatList, View} from "react-native";
 import {ListItem} from "@rneui/themed";
+import LoadingModal from "../../../ui/LoadingModal";
 
 const NotFoundScreen = () => {
     const [notFound, setNotFound] = useState(null);
@@ -11,13 +12,13 @@ const NotFoundScreen = () => {
     const {id} = useSearchParams();
 
     useFocusEffect(useCallback(() => {
-        loadNotFound();
+        loadNotFound().then();
     }, []));
 
     const loadNotFound = async (): Promise<void> => {
         const res = await SwapApi.getNotFound(id);
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -42,6 +43,7 @@ const NotFoundScreen = () => {
 
     return (
         <View style={{flex: 1}}>
+            <LoadingModal loading={loading}/>
             <FlatList
                 data={notFound}
                 extraData={notFound}

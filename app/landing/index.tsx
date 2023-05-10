@@ -19,7 +19,7 @@ const LandingScreen = () => {
     const dispatch = useAppDispatch();
 
     useFocusEffect(useCallback(() => {
-        if(Platform.OS === "ios" && Settings.get("email")) {
+        if (Platform.OS === "ios" && Settings.get("email")) {
             Alert.alert("Welcome Back", "In preparation for syncing and support for Android users, we" +
                 " have made some changes to the app. As a result, you will need to sign back in to your account. Also," +
                 " you will need to re-link your music services.\n\nSorry for the trouble! We hope you'll like what is" +
@@ -41,7 +41,7 @@ const LandingScreen = () => {
             const name = credential.fullName.givenName;
             const resp = await UserApi.loginWithApple(credential.authorizationCode, name);
 
-            if(!resp.success) {
+            if (!resp.success) {
                 console.log("Error");
                 Alert.alert("Error", resp.data.message);
                 return;
@@ -56,9 +56,9 @@ const LandingScreen = () => {
             }));
 
             router.replace("/home/swap");
-        } catch(e) {
+        } catch (e) {
             console.log(e);
-            if(e.code !== "ERR_CANCELED") {
+            if (e.code !== "ERR_CANCELED") {
                 Alert.alert("Error", "There was an error authenticating with Apple.");
             }
         }
@@ -66,7 +66,7 @@ const LandingScreen = () => {
 
     return (
         <View style={styles.main}>
-            <TrackingPermissions />
+            <TrackingPermissions/>
             <View style={styles.content}>
                 <View style={styles.text}>
                     <Text h2>Swaps. Made. Easy.</Text>
@@ -80,7 +80,7 @@ const LandingScreen = () => {
                                 onPress={onAppleButtonPress}
                                 buttonType={AppleAuthenticationButtonType.SIGN_IN}
                                 buttonStyle={AppleAuthenticationButtonStyle.BLACK}
-                                style={{ width: "100%", height: 44, borderRadius: 10, marginBottom: 8 }}
+                                style={{width: "100%", height: 44, borderRadius: 10, marginBottom: 8}}
                             />
                         )
                     }

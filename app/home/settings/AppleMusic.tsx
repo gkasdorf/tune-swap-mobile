@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert, StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import * as WebBrowser from "expo-web-browser";
 import {WebBrowserResultType} from "expo-web-browser";
@@ -18,7 +20,7 @@ const AppleMusicScreen = () => {
     const user = useAppSelector(selectUser);
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     const loadSettings = async () => {
@@ -32,13 +34,15 @@ const AppleMusicScreen = () => {
             preferEphemeralSession: !__DEV__
         });
 
-        if(amRes.type === WebBrowserResultType.CANCEL) {
+        if (amRes.type === WebBrowserResultType.CANCEL) {
             return;
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const success = amRes.url.split("?success=")[1] === "true";
 
-        if(!success) {
+        if (!success) {
             Alert.alert("Error", "There was an error linking your Apple Music account.");
             return;
         }
@@ -88,10 +92,10 @@ const AppleMusicScreen = () => {
                         accessory={"DisclosureIndicator"}
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
-                            if(isAuthed) {
-                                onSignoutPress();
+                            if (isAuthed) {
+                                onSignoutPress().then();
                             } else {
-                                onAuthPress();
+                                onAuthPress().then();
                             }
                         }}
                     />

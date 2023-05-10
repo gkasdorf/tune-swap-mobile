@@ -11,12 +11,12 @@ import Info from "../../ui/Info";
 import {selectUser, setUser} from "../../slices/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import * as AppleAuthentication from "expo-apple-authentication";
 import {
     AppleAuthenticationButton,
     AppleAuthenticationButtonStyle,
     AppleAuthenticationButtonType
 } from "expo-apple-authentication";
-import * as AppleAuthentication from "expo-apple-authentication";
 import UserApi from "../../api/user/UserApi";
 
 const Login = () => {
@@ -41,7 +41,7 @@ const Login = () => {
     // Whenever we get a successful response, we need to store the token and redirect to home
     useEffect(() => {
         (async () => {
-            if(success) {
+            if (success) {
                 await AsyncStorage.setItem("@token", token);
 
                 router.replace("/home/swap");
@@ -75,11 +75,14 @@ const Login = () => {
             });
 
             const name = credential.fullName.givenName;
-            const resp = await UserApi.loginWithApple(credential.authorizationCode, name);
+            const resp = await UserApi.loginWithApple({
+                code: credential.authorizationCode,
+                name: name
+            });
 
-            if(!resp.success) {
+            if (!resp.success) {
                 console.log("Error");
-                Alert.alert("Error", resp.data.message);
+                Alert.alert("Error", resp.message);
                 return;
             }
 
@@ -92,9 +95,9 @@ const Login = () => {
             }));
 
             router.replace("/home/swap");
-        } catch(e) {
+        } catch (e) {
             console.log(e);
-            if(e.code !== "ERR_CANCELED") {
+            if (e.code !== "ERR_CANCELED") {
                 Alert.alert("Error", "There was an error authenticating with Apple.");
             }
         }
@@ -143,12 +146,13 @@ const Login = () => {
                                     onPress={onAppleButtonPress}
                                     buttonType={AppleAuthenticationButtonType.SIGN_IN}
                                     buttonStyle={AppleAuthenticationButtonStyle.BLACK}
-                                    style={{ width: "100%", height: 44, borderRadius: 10, marginBottom: 8 }}
+                                    style={{width: "100%", height: 44, borderRadius: 10, marginBottom: 8}}
                                 />
                             )
                         }
                     </View>
-                    <Text>Don&apos;t have an account? <Link href={"/landing/signup"} style={style.link}>Create one now!</Link></Text>
+                    <Text>Don&apos;t have an account? <Link href={"/landing/signup"} style={style.link}>Create one
+                        now!</Link></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>

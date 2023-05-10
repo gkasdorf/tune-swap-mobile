@@ -19,7 +19,7 @@ const ShareStepOneScreen = () => {
                     First, tell us where you want to share from.
                 </Text>
             </View>
-            <ServicesList onServicePress={onServicePress} />
+            <ServicesList onServicePress={onServicePress}/>
         </View>
     );
 };

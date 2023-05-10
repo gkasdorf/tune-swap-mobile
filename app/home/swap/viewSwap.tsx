@@ -9,7 +9,6 @@ import LoadingModal from "../../../ui/LoadingModal";
 import SwapStatus from "../../../api/enums/SwapStatus";
 import {AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
 import Constants from "expo-constants";
-import {Icon} from "@rneui/base";
 
 const bannerAdUnitId = __DEV__ ? TestIds.BANNER : Constants.expoConfig.extra.admobBannerId;
 // eslint-disable-next-line no-undef
@@ -35,21 +34,21 @@ const ViewSwapScreen = () => {
 
     useEffect(() => {
         return () => {
-            if(reload) clearInterval(reload);
-            if(unsubscribe) unsubscribe();
+            if (reload) clearInterval(reload);
+            if (unsubscribe) unsubscribe();
         };
     }, []);
 
     useEffect(() => {
-        if(!loading && adLoaded) {
-            interstitial.show();
+        if (!loading && adLoaded) {
+            interstitial.show().then();
         }
     }, [loading, adLoaded]);
 
     useFocusEffect(useCallback(() => {
-        loadSwap();
+        loadSwap().then();
 
-        if(isNew) {
+        if (isNew) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
                 setAdLoaded(true);
             });
@@ -58,10 +57,10 @@ const ViewSwapScreen = () => {
         }
     }, []));
 
-    const loadSwap = async (): Promise<void>  => {
+    const loadSwap = async (): Promise<void> => {
         const res = await SwapApi.get(id);
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -72,32 +71,32 @@ const ViewSwapScreen = () => {
         setPercentage(percentage);
         setLoading(false);
 
-        if(res.data.swap.status !== SwapStatus.COMPLETED && res.data.swap.status !== SwapStatus.ERROR && !reload) {
+        if (res.data.swap.status !== SwapStatus.COMPLETED && res.data.swap.status !== SwapStatus.ERROR && !reload) {
             reload = setInterval(loadSwap, 3000);
         }
 
-        if((res.data.swap.status === SwapStatus.COMPLETED || res.data.swap.status === SwapStatus.ERROR) && reload) {
+        if ((res.data.swap.status === SwapStatus.COMPLETED || res.data.swap.status === SwapStatus.ERROR) && reload) {
             clearInterval(reload);
             reload = null;
         }
     };
 
     const getStatusVariant = (status: string): StatusIconVariant => {
-        switch(status) {
-        case SwapStatus.COMPLETED: {
-            return "success";
-        }
-        case SwapStatus.ERROR: {
-            return "error";
-        }
-        default: {
-            return "pending";
-        }
+        switch (status) {
+            case SwapStatus.COMPLETED: {
+                return "success";
+            }
+            case SwapStatus.ERROR: {
+                return "error";
+            }
+            default: {
+                return "pending";
+            }
         }
     };
 
     const onNotFoundPress = (): void => {
-        if(swap.songs_not_found < 1) return;
+        if (swap.songs_not_found < 1) return;
 
         router.push({pathname: "/home/swap/notFound", params: {id: id}});
     };
@@ -126,7 +125,7 @@ const ViewSwapScreen = () => {
                         <Text h3 style={{textAlign: "center"}}>{swap.playlist_name}</Text>
                         <Text style={{textAlign: "center"}}>Swap from {swap.from_service} to {swap.to_service}</Text>
                         <View style={styles.status}>
-                            <StatusIcon variant={getStatusVariant(swap.status)} />
+                            <StatusIcon variant={getStatusVariant(swap.status)}/>
                             {
                                 swap.status !== SwapStatus.COMPLETED && swap.status !== SwapStatus.ERROR && (
                                     <LinearProgress
@@ -182,7 +181,7 @@ const ViewSwapScreen = () => {
                     </View>
                 )
             }
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
         </ScrollView>
     );
 };

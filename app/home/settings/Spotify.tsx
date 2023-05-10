@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert, StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import SpotifyApi, {SPOTIFY_REDIRECT_URL} from "../../../api/services/SpotifyApi";
 import * as WebBrowser from "expo-web-browser";
@@ -12,7 +14,7 @@ const SpotifyScreen = () => {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     const loadSettings = async () => {
@@ -23,7 +25,7 @@ const SpotifyScreen = () => {
     const onAuthPress = async (): Promise<void> => {
         const res = await SpotifyApi.getAuthUrl();
 
-        if(!res.success) {
+        if (!res.success) {
             Alert.alert("Error", res.message);
             return;
         }
@@ -32,14 +34,16 @@ const SpotifyScreen = () => {
             preferEphemeralSession: !__DEV__
         });
 
-        if(spotifyResult.type === WebBrowserResultType.CANCEL) {
+        if (spotifyResult.type === WebBrowserResultType.CANCEL) {
             return;
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const spotifyToken = spotifyResult?.url.split("code=")[1].split("&state")[0];
         const authRes = await SpotifyApi.doAuth(spotifyToken);
 
-        if(!authRes.success) {
+        if (!authRes.success) {
             Alert.alert("Error", authRes.message);
             return;
         }
@@ -93,10 +97,10 @@ const SpotifyScreen = () => {
                         accessory={"DisclosureIndicator"}
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
-                            if(isAuthed) {
-                                onSignoutPress();
+                            if (isAuthed) {
+                                onSignoutPress().then();
                             } else {
-                                onAuthPress();
+                                onAuthPress().then();
                             }
                         }}
                     />

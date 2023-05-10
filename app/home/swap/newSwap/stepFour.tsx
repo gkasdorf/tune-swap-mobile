@@ -33,7 +33,7 @@ const SwapStepFourScreen = () => {
             description: description
         });
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -45,7 +45,7 @@ const SwapStepFourScreen = () => {
 
     return (
         <View style={styles.main}>
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             <Text h4 style={{textAlign: "center"}}>
                 Just a few more things...
             </Text>

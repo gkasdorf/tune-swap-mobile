@@ -9,8 +9,13 @@ const NewSwapButton = () => {
     const onPress = async () => {
         const res = await UserApi.isRunning();
 
-        if(!res.success) {
+        if (!res.success) {
             Alert.alert("Error", res.message);
+            return;
+        }
+
+        if (res.data.running) {
+            Alert.alert("Error", "You can't start a new swap while you have one running.");
             return;
         }
 
@@ -18,7 +23,7 @@ const NewSwapButton = () => {
     };
 
     return (
-        <Button title={"New Swap"} onPress={onPress} />
+        <Button title={"New Swap"} onPress={onPress}/>
     );
 };
 

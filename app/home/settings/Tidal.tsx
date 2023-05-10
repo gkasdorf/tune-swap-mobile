@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert, DeviceEventEmitter, StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import {useRouter} from "expo-router";
 import {appleBlue} from "../../../style";
@@ -12,7 +14,7 @@ const TidalScreen = () => {
     const router = useRouter();
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     DeviceEventEmitter.addListener("event.tidalAuthEvent", (e) => {
@@ -71,8 +73,8 @@ const TidalScreen = () => {
                         accessory={"DisclosureIndicator"}
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
-                            if(isAuthed) {
-                                onSignoutPress();
+                            if (isAuthed) {
+                                onSignoutPress().then();
                             } else {
                                 onAuthPress();
                             }

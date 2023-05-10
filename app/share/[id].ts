@@ -7,7 +7,7 @@ const ShareRedirect = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if(id) {
+        if (id) {
             router.replace({pathname: "/home/share/newCopy", params: {id: id as string}});
         }
     }, [id]);

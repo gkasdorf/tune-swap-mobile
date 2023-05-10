@@ -10,7 +10,7 @@ const LoadingModal = ({loading = true}) => {
         >
             <View style={styles.wrapper}>
                 <View style={[styles.container, styles.horizontal, styles.loaderContainer]}>
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large"/>
                 </View>
             </View>
         </Modal>

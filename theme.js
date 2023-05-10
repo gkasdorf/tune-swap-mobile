@@ -37,8 +37,7 @@ const theme = createTheme({
                 borderRadius: 10
             },
 
-            containerStyle: {
-            }
+            containerStyle: {}
         }
     },
 });

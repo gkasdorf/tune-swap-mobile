@@ -16,13 +16,13 @@ const NewCopyScreen = () => {
     const router = useRouter();
 
     useFocusEffect(useCallback(() => {
-        loadShare();
+        loadShare().then();
     }, [id]));
 
     const loadShare = async () => {
         const res = await ShareApi.get(id.toString());
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -37,7 +37,7 @@ const NewCopyScreen = () => {
 
         const res = await ShareApi.startCopy(share.access_id, service);
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -57,7 +57,7 @@ const NewCopyScreen = () => {
                         labelVisible={Platform.OS === "ios"}
                     />
                 )
-            }} />
+            }}/>
             {
                 share && (
                     <View style={styles.screen}>
@@ -68,12 +68,12 @@ const NewCopyScreen = () => {
                         <Divider style={{marginVertical: 20}}/>
                         <View style={{marginTop: 10}}>
                             <Text h4 style={{textAlign: "center"}}>Where to?</Text>
-                            <ServicesList onServicePress={onServicePress} />
+                            <ServicesList onServicePress={onServicePress}/>
                         </View>
                     </View>
                 )
             }
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
         </View>
     );
 };

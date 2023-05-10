@@ -9,7 +9,7 @@ const TrackingPermissions = () => {
         // We are not doing anything with this info as we do not render personalized ads
     };
 
-    const androidRequest = async() => {
+    const androidRequest = async () => {
         const consentInfo = await AdsConsent.requestInfoUpdate();
 
         if (consentInfo.isConsentFormAvailable && consentInfo.status === AdsConsentStatus.REQUIRED) {
@@ -21,7 +21,7 @@ const TrackingPermissions = () => {
     useEffect(() => {
         console.log("Requesting...");
         setTimeout(() => {
-            if(Platform.OS === "ios") iosRequest();
+            if (Platform.OS === "ios") iosRequest();
             else androidRequest();
         }, 1500);
     }, []);

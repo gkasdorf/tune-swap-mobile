@@ -34,8 +34,8 @@ const SignupScreen = () => {
     }, []);
 
     useEffect(() => {
-        (async() => {
-            if(success) {
+        (async () => {
+            if (success) {
                 await AsyncStorage.setItem("@token", token);
 
                 router.replace("/home/swap");
@@ -56,7 +56,7 @@ const SignupScreen = () => {
 
     return (
         <View style={styles.app}>
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             <KeyboardAwareScrollView>
                 <View style={styles.main}>
                     <Text style={styles.header}>Hey there! Let&apos;s get started.</Text>

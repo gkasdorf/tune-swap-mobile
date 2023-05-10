@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import {Alert, Linking, ScrollView, StyleSheet} from "react-native";
 import {Text} from "@rneui/themed";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import {useAppDispatch, useAppSelector} from "../../../hooks";
 import {clearUser, selectUser} from "../../../slices/user/userSlice";
@@ -31,7 +33,7 @@ const SettingsScreen = () => {
 
 
     useEffect(() => {
-        PushNotifications.register();
+        PushNotifications.register().then();
     }, []);
 
     const onSignoutPress = async (): Promise<void> => {
@@ -60,12 +62,12 @@ const SettingsScreen = () => {
                 onPress: async () => {
                     const res = await UserApi.delete();
 
-                    if(!res.success) {
+                    if (!res.success) {
                         Alert.alert("Error", res.message);
                         return;
                     }
 
-                    onSignoutPress();
+                    await onSignoutPress();
                 }
             }
         ]);
@@ -166,17 +168,37 @@ const SettingsScreen = () => {
                     <Cell
                         title={"Support"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => { Linking.openURL("mailto:support@tuneswap.app"); }}
+                        onPress={() => {
+                            Linking.openURL("mailto:support@tuneswap.app").then();
+                        }}
                     />
                     <Cell
                         title={"Privacy Policy"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => { Linking.openURL("https://tuneswap.app/privacy"); }}
+                        onPress={() => {
+                            Linking.openURL("https://tuneswap.app/privacy").then();
+                        }}
                     />
                     <Cell
                         title={"License"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => {router.push("/home/settings/licenses"); }}
+                        onPress={() => {
+                            router.push("/home/settings/licenses");
+                        }}
+                    />
+                    <Cell
+                        title={"GitHub"}
+                        accessory={"DisclosureIndicator"}
+                        onPress={() => {
+                            Linking.openURL("https://github.com/gkasdorf/tune-swap-mobile").then();
+                        }}
+                    />
+                    <Cell
+                        title={"Trello"}
+                        accessory={"DisclosureIndicator"}
+                        onPress={() => {
+                            Linking.openURL("https://trello.com/b/dOEkVxW7/tuneswap").then();
+                        }}
                     />
                 </Section>
 

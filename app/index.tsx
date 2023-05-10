@@ -14,11 +14,11 @@ const Home = () => {
     useEffect(() => {
         console.log("Here we are.");
 
-        if(!navigationState?.key) {
+        if (!navigationState?.key) {
             return;
         }
 
-        load();
+        load().then();
     }, [navigationState?.key]);
 
     useEffect(() => {
@@ -29,9 +29,9 @@ const Home = () => {
         //     router.replace("/home/swap");
         // }
 
-        if(error) {
+        if (error) {
             router.replace("/landing/login");
-        } else if(success) {
+        } else if (success) {
             router.replace("/home/swap");
         }
     }, [error, loading, success]);
@@ -39,7 +39,7 @@ const Home = () => {
     const load = async () => {
         const token = await AsyncStorage.getItem("@token");
 
-        if(!token) {
+        if (!token) {
             router.replace("landing");
             return;
         }
@@ -47,8 +47,8 @@ const Home = () => {
         dispatch(loadUser({token}));
     };
 
-    if(!success && !error) {
-        return <SplashScreen />;
+    if (!success && !error) {
+        return <SplashScreen/>;
     }
 
     return (

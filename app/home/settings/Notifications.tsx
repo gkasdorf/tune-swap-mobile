@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import {Switch} from "@rneui/themed";
 import NotificationsApi from "../../../api/user/NotificationsApi";
@@ -9,7 +11,7 @@ const NotificationsScreen = () => {
     const [notificationsEnabled, setNotificationsEnabled] = React.useState(false);
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     const loadSettings = async (): Promise<void> => {
@@ -22,7 +24,7 @@ const NotificationsScreen = () => {
 
         const deviceId = await AsyncStorage.getItem("@deviceToken");
 
-        if(value) {
+        if (value) {
             await NotificationsApi.enableNotifications(deviceId);
         } else {
             await NotificationsApi.disableNotifications(deviceId);

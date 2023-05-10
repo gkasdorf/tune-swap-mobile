@@ -10,8 +10,8 @@ const SettingsLayout = () => {
                     title: "Settings"
                 }}
             />
-            <Stack.Screen name={"TidalAuth"} options={{title: "Tidal Authentication"}} />
-            <Stack.Screen name={"licenses"} options={{title: "Licenses"}} />
+            <Stack.Screen name={"TidalAuth"} options={{title: "Tidal Authentication"}}/>
+            <Stack.Screen name={"licenses"} options={{title: "Licenses"}}/>
         </Stack>
     );
 };
