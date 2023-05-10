@@ -14,6 +14,11 @@ const NewSwapButton = () => {
             return;
         }
 
+        if(res.data.running) {
+            Alert.alert("Error", "You can't start a new swap while you have one running.");
+            return;
+        }
+
         router.push("/home/swap/newSwap/stepOne");
     };
 
