@@ -7,7 +7,7 @@ interface DefaultResponse {
 interface ResponseData {
     message?: string;
     success?: boolean;
-    [key: string]: string|number|boolean|object|null;
+    [key: string]: string|number|boolean|object|object[]|null;
 }
 
 class ApiResponse {

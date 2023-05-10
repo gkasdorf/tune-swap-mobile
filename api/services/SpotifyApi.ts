@@ -4,17 +4,17 @@ import Api from "../Api";
 export const SPOTIFY_REDIRECT_URL = "tuneswap://home/settings/Spotify";
 
 class SpotifyApi {
-    public static getAuthUrl = (): Promise<ApiResponse> => {
+    public static getAuthUrl = async (): Promise<ApiResponse> => {
         const api = new Api("/v2/spotify/authUrl");
 
         const data = {
             redirect_uri: SPOTIFY_REDIRECT_URL
         };
 
-        return api.get(data);
+        return await api.get(data) as ApiResponse;
     };
 
-    public static doAuth = (code: string): Promise<ApiResponse> => {
+    public static doAuth = async (code: string): Promise<ApiResponse> => {
         const api = new Api("/v2/spotify/auth");
 
         const data = {
@@ -22,13 +22,13 @@ class SpotifyApi {
             redirect_uri: SPOTIFY_REDIRECT_URL
         };
 
-        return api.get(data);
+        return await api.get(data) as ApiResponse;
     };
 
-    public static getUserPlaylists = (): Promise<ApiResponse> => {
+    public static getUserPlaylists = async (): Promise<ApiResponse> => {
         const api = new Api("/v2/spotify/me/playlists");
 
-        return api.get();
+        return await api.get() as ApiResponse;
     };
 }
 
