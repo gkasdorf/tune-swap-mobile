@@ -1,5 +1,5 @@
-import SwapStatus from "../../enums/SwapStatus";
-import MusicService from "../../enums/MusicService";
+import SwapStatus from "../enums/SwapStatus";
+import MusicService from "../enums/MusicService";
 
 export interface Swap {
     id: number,

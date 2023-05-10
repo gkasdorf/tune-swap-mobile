@@ -16,7 +16,10 @@ const ShareStepTwoScreen = () => {
     const onPlaylistPress = async (id: string) => {
         setLoading(true);
 
-        const res = await ShareApi.create(service.toString(), id);
+        const res = await ShareApi.create({
+            playlist_service: service.toString(),
+            playlist_id: id
+        });
 
         if(!res.success) {
             setLoading(false);

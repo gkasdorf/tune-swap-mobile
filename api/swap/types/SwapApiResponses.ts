@@ -1,5 +1,5 @@
 import SwapStatus from "../../enums/SwapStatus";
-import {Swap, SwapWithNotFound} from "./SwapTypes";
+import {Swap, SwapWithNotFound} from "../../types/SwapTypes";
 import ApiResponse from "../../ApiResponse";
 
 export interface StartSwapResponse extends ApiResponse {

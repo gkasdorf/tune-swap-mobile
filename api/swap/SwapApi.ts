@@ -2,7 +2,7 @@ import Api from "../Api";
 import ApiResponse from "../ApiResponse";
 import {StartSwapRequest} from "./types/SwapApiRequests";
 import {GetAllSwapsResponse, GetSwapResponse, SongsNotFoundResponse, StartSwapResponse} from "./types/SwapApiResponses";
-import {Swap} from "./types/SwapTypes";
+import {Swap} from "../types/SwapTypes";
 
 class SwapApi {
     public static start = async (data: StartSwapRequest): Promise<StartSwapResponse> => {
