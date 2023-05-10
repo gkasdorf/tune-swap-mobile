@@ -39,8 +39,7 @@ const ShareStepTwoScreen = () => {
                     Now, select the playlist you want to share...
                 </Text>
             </View>
-            <PlaylistsList service={service?.toString() ?? null} setLoading={setLoading}
-                           onPlaylistPress={onPlaylistPress}/>
+            <PlaylistsList service={service?.toString() ?? null} setLoading={setLoading} onPlaylistPress={onPlaylistPress}/>
         </View>
     );
 };

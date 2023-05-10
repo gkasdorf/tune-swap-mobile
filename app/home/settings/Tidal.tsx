@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert, DeviceEventEmitter, StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import {useRouter} from "expo-router";
 import {appleBlue} from "../../../style";
@@ -12,7 +14,7 @@ const TidalScreen = () => {
     const router = useRouter();
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     DeviceEventEmitter.addListener("event.tidalAuthEvent", (e) => {
@@ -32,23 +34,23 @@ const TidalScreen = () => {
     const onSignoutPress = async (): Promise<void> => {
         Alert.alert("Sign out", "Are you sure you wish to sign out of Tidal?\n\nYou will be unable to" +
             "transfer music between other services and Tidal until you sign back in.",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel"
-                },
-                {
-                    text: "Sign out",
-                    onPress: async () => {
-                        setIsAuthed(false);
-                        setUsername("");
+        [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Sign out",
+                onPress: async () => {
+                    setIsAuthed(false);
+                    setUsername("");
 
-                        await AsyncStorage.setItem("@hasTidal", "false");
-                        await AsyncStorage.setItem("@tidalUsername", "");
-                    },
-                    isPreferred: true
-                }
-            ]);
+                    await AsyncStorage.setItem("@hasTidal", "false");
+                    await AsyncStorage.setItem("@tidalUsername", "");
+                },
+                isPreferred: true
+            }
+        ]);
     };
 
     return (
@@ -72,7 +74,7 @@ const TidalScreen = () => {
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
                             if (isAuthed) {
-                                onSignoutPress();
+                                onSignoutPress().then();
                             } else {
                                 onAuthPress();
                             }

@@ -12,7 +12,7 @@ const CopiesScreen = () => {
     const router = useRouter();
 
     useFocusEffect(useCallback(() => {
-        loadCopies();
+        loadCopies().then();
     }, []));
 
     const loadCopies = async (pull = false) => {

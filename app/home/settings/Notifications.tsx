@@ -11,7 +11,7 @@ const NotificationsScreen = () => {
     const [notificationsEnabled, setNotificationsEnabled] = React.useState(false);
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     const loadSettings = async (): Promise<void> => {

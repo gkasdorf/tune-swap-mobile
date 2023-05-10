@@ -35,8 +35,7 @@ const SwapStepTwoScreen = () => {
                     Now, select the playlist you want to swap...
                 </Text>
             </View>
-            <PlaylistsList service={fromService} setLoading={setLoading} onPlaylistPress={onPlaylistPress}
-                           includeLibrary/>
+            <PlaylistsList service={fromService} setLoading={setLoading} onPlaylistPress={onPlaylistPress} includeLibrary/>
         </View>
     );
 };

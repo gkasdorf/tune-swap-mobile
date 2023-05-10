@@ -39,12 +39,12 @@ const ViewShareScreen = () => {
 
     useEffect(() => {
         if (!loading && adLoaded) {
-            interstitial.show();
+            interstitial.show().then();
         }
     }, [loading, adLoaded]);
 
     useFocusEffect(useCallback(() => {
-        loadCopy();
+        loadCopy().then();
 
         if (isNew) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
@@ -100,8 +100,7 @@ const ViewShareScreen = () => {
                         options={{
                             gestureEnabled: false,
                             headerLeft: () => (
-                                <HeaderBackButton onPress={() => router.push("/home/share")} label={"Back"}
-                                                  labelVisible={Platform.OS === "ios"}/>
+                                <HeaderBackButton onPress={() => router.push("/home/share")} label={"Back"} labelVisible={Platform.OS === "ios"}/>
                             )
                         }}
                     />

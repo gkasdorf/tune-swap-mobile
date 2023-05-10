@@ -19,10 +19,6 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
         "linebreak-style": [
             "error",
             "unix"
@@ -34,6 +30,13 @@ module.exports = {
         "semi": [
             "error",
             "always"
+        ],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
         ]
     },
     "root": true

@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
 import ServicesApi from "../../api/services/ServicesApi";
-import {Alert, FlatList} from "react-native";
-import {ListItem} from "@rneui/themed";
+import {Alert, FlatList, Platform} from "react-native";
+import {ListItem, SearchBar} from "@rneui/base";
 import ImageOrIcon from "./ImageOrIcon";
 import MusicService from "../../api/enums/MusicService";
+import {SearchBarDefault} from "@rneui/base/dist/SearchBar/SearchBar-default";
+import {SearchBarIOS} from "@rneui/base/dist/SearchBar/SearchBar-ios";
+import {SearchBarAndroid} from "@rneui/base/dist/SearchBar/SearchBar-android";
 
 interface PlaylistsListProps {
     service: MusicService | string;
@@ -14,16 +17,17 @@ interface PlaylistsListProps {
 }
 
 const PlaylistsList = ({
-                           service,
-                           setLoading,
-                           onPlaylistPress,
-                           searchTerm = "",
-                           includeLibrary = false
-                       }: PlaylistsListProps) => {
+    service,
+    setLoading,
+    onPlaylistPress,
+    searchTerm = "",
+    includeLibrary = false
+}: PlaylistsListProps) => {
     const [playlists, setPlaylists] = useState(null);
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
-        loadPlaylists();
+        loadPlaylists().then();
     }, []);
 
     const loadPlaylists = async (): Promise<void> => {
@@ -52,7 +56,7 @@ const PlaylistsList = ({
     const playlistItem = (obj) => {
         const playlist = obj.item;
 
-        if (searchTerm !== "" && !playlist.name.toLowerCase().includes(searchTerm.toLowerCase())) return null;
+        if (search !== "" && !playlist.name.toLowerCase().includes(search.toLowerCase())) return null;
 
         return (
             <ListItem bottomDivider onPress={() => onPlaylistPress(playlist.id, playlist.name)}>
@@ -67,7 +71,23 @@ const PlaylistsList = ({
     };
 
     return (
-        <FlatList data={playlists} renderItem={playlistItem} keyExtractor={item => item.id}/>
+        <>
+            {
+                Platform.OS === "ios" ? (
+                    <SearchBarIOS
+                        value={search}
+                        onChangeText={text => setSearch(text)}
+                    />
+                ) : (
+                    <SearchBarAndroid
+                        value={search}
+                        onChangeText={text => setSearch(text)}
+                    />
+                )
+            }
+
+            <FlatList data={playlists} renderItem={playlistItem} keyExtractor={item => item.id}/>
+        </>
     );
 };
 

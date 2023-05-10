@@ -19,7 +19,7 @@ const SwapsScreen = () => {
     const router = useRouter();
 
     useFocusEffect(useCallback(() => {
-        loadSwaps();
+        loadSwaps().then();
     }, []));
 
     const loadSwaps = async (pull = false): Promise<void> => {
@@ -43,8 +43,7 @@ const SwapsScreen = () => {
         if (swap.type === "ad") {
             return (
                 <View key={swap.key}>
-                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-                              requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
+                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
                 </View>
             );
         }

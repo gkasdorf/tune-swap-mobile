@@ -13,7 +13,7 @@ const TidalAuth = () => {
     const router = useRouter();
 
     useEffect(() => {
-        getAuthData();
+        getAuthData().then();
     }, []);
 
     const getAuthData = async () => {
@@ -46,7 +46,7 @@ const TidalAuth = () => {
             const code = e.url.split("code=")[1].split("&state=")[0];
 
             if (!didAuth) {
-                doAuth(code);
+                doAuth(code).then();
                 didAuth = true;
             }
         }

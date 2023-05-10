@@ -5,7 +5,7 @@ export default {
     "expo": {
         "name": "TuneSwap",
         "slug": "tune-swap-ios",
-        "version": "1.3.1",
+        "version": "1.3.2",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
@@ -40,8 +40,8 @@ export default {
                     "category": ["BROWSABLE", "DEFAULT"]
                 }
             ],
-            "buildNumber": "10",
-            "versionCode": "10"
+            "buildNumber": "11",
+            "versionCode": "11"
         },
         "web": {
             "favicon": "./assets/favicon.png"

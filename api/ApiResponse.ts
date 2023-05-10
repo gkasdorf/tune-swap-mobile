@@ -8,7 +8,7 @@ interface ResponseData {
     message?: string;
     success?: boolean;
 
-    [key: string]: string | number | boolean | object | object[] | null;
+    [key: string]: any;
 }
 
 class ApiResponse {

@@ -16,7 +16,7 @@ const NewCopyScreen = () => {
     const router = useRouter();
 
     useFocusEffect(useCallback(() => {
-        loadShare();
+        loadShare().then();
     }, [id]));
 
     const loadShare = async () => {

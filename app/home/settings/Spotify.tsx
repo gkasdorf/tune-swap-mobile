@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert, StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import SpotifyApi, {SPOTIFY_REDIRECT_URL} from "../../../api/services/SpotifyApi";
 import * as WebBrowser from "expo-web-browser";
@@ -12,7 +14,7 @@ const SpotifyScreen = () => {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     const loadSettings = async () => {
@@ -36,6 +38,8 @@ const SpotifyScreen = () => {
             return;
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const spotifyToken = spotifyResult?.url.split("code=")[1].split("&state")[0];
         const authRes = await SpotifyApi.doAuth(spotifyToken);
 
@@ -54,23 +58,23 @@ const SpotifyScreen = () => {
     const onSignoutPress = async (): Promise<void> => {
         Alert.alert("Sign out", "Are you sure you wish to sign out of Spotify?\n\nYou will be unable to" +
             "transfer music between other services and Spotify until you sign back in.",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel"
-                },
-                {
-                    text: "Sign out",
-                    onPress: async () => {
-                        setIsAuthed(false);
-                        setEmail("");
+        [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Sign out",
+                onPress: async () => {
+                    setIsAuthed(false);
+                    setEmail("");
 
-                        await AsyncStorage.setItem("@hasSpotify", "false");
-                        await AsyncStorage.setItem("@spotifyEmail", "");
-                    },
-                    isPreferred: true
-                }
-            ]);
+                    await AsyncStorage.setItem("@hasSpotify", "false");
+                    await AsyncStorage.setItem("@spotifyEmail", "");
+                },
+                isPreferred: true
+            }
+        ]);
     };
 
     return (
@@ -94,9 +98,9 @@ const SpotifyScreen = () => {
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
                             if (isAuthed) {
-                                onSignoutPress();
+                                onSignoutPress().then();
                             } else {
-                                onAuthPress();
+                                onAuthPress().then();
                             }
                         }}
                     />

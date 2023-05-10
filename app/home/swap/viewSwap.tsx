@@ -174,8 +174,7 @@ const ViewSwapScreen = () => {
                         {
                             !__DEV__ && (
                                 <View style={{alignItems: "center", marginTop: 20}}>
-                                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.MEDIUM_RECTANGLE}
-                                              requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
+                                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.MEDIUM_RECTANGLE} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
                                 </View>
                             )
                         }

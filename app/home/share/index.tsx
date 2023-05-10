@@ -14,7 +14,7 @@ const ShareScreen = () => {
     const router = useRouter();
 
     useFocusEffect(useCallback(() => {
-        loadShares();
+        loadShares().then();
     }, []));
 
     const loadShares = async (pull = false) => {

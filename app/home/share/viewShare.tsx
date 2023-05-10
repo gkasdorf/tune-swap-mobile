@@ -26,7 +26,7 @@ const ViewShareScreen = () => {
     }, []);
 
     useFocusEffect(useCallback(() => {
-        loadShare();
+        loadShare().then();
     }, []));
 
     const loadShare = async () => {

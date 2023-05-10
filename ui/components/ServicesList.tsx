@@ -19,7 +19,7 @@ const ServicesList = ({onServicePress}) => {
     const [tidalUsername, setTidalUsername] = useState("");
 
     useEffect(() => {
-        checkServices();
+        checkServices().then();
     }, []);
 
     const checkServices = async (): Promise<void> => {

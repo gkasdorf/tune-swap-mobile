@@ -18,7 +18,7 @@ const Home = () => {
             return;
         }
 
-        load();
+        load().then();
     }, [navigationState?.key]);
 
     useEffect(() => {

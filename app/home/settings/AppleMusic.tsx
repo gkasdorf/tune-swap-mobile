@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert, StyleSheet, View} from "react-native";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {Cell, Section, TableView} from "react-native-tableview-simple";
 import * as WebBrowser from "expo-web-browser";
 import {WebBrowserResultType} from "expo-web-browser";
@@ -18,7 +20,7 @@ const AppleMusicScreen = () => {
     const user = useAppSelector(selectUser);
 
     useEffect(() => {
-        loadSettings();
+        loadSettings().then();
     }, []);
 
     const loadSettings = async () => {
@@ -36,6 +38,8 @@ const AppleMusicScreen = () => {
             return;
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const success = amRes.url.split("?success=")[1] === "true";
 
         if (!success) {
@@ -51,21 +55,21 @@ const AppleMusicScreen = () => {
     const onSignoutPress = async (): Promise<void> => {
         Alert.alert("Sign out", "Are you sure you wish to sign out of Apple Music?\n\nYou will be unable to" +
             "transfer music between other services and Apple Music until you sign back in.",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel"
-                },
-                {
-                    text: "Sign out",
-                    onPress: async () => {
-                        setIsAuthed(false);
+        [
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Sign out",
+                onPress: async () => {
+                    setIsAuthed(false);
 
-                        await AsyncStorage.setItem("@hasAppleMusic", "false");
-                    },
-                    isPreferred: true
-                }
-            ]);
+                    await AsyncStorage.setItem("@hasAppleMusic", "false");
+                },
+                isPreferred: true
+            }
+        ]);
     };
 
     return (
@@ -89,9 +93,9 @@ const AppleMusicScreen = () => {
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
                             if (isAuthed) {
-                                onSignoutPress();
+                                onSignoutPress().then();
                             } else {
-                                onAuthPress();
+                                onAuthPress().then();
                             }
                         }}
                     />
