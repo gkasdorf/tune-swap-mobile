@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import ServicesApi from "../../api/services/ServicesApi";
-import {Alert, FlatList, Platform} from "react-native";
+import {Alert, FlatList, Platform, SafeAreaView, ScrollView, View} from "react-native";
 import {ListItem, SearchBar} from "@rneui/base";
 import ImageOrIcon from "./ImageOrIcon";
 import MusicService from "../../api/enums/MusicService";
@@ -71,23 +71,29 @@ const PlaylistsList = ({
     };
 
     return (
-        <>
-            {
-                Platform.OS === "ios" ? (
-                    <SearchBarIOS
-                        value={search}
-                        onChangeText={text => setSearch(text)}
-                    />
-                ) : (
-                    <SearchBarAndroid
-                        value={search}
-                        onChangeText={text => setSearch(text)}
-                    />
-                )
-            }
+        <View>
 
-            <FlatList data={playlists} renderItem={playlistItem} keyExtractor={item => item.id}/>
-        </>
+            <FlatList
+                data={playlists}
+                renderItem={playlistItem}
+                keyExtractor={item => item.id}
+                ListHeaderComponent={() => {
+                    return (
+                        Platform.OS === "ios" ? (
+                            <SearchBarIOS
+                                value={search}
+                                onChangeText={text => setSearch(text)}
+                            />
+                        ) : (
+                            <SearchBarAndroid
+                                value={search}
+                                onChangeText={text => setSearch(text)}
+                            />
+                        )
+                    )
+                }}
+            />
+        </View>
     );
 };
 
