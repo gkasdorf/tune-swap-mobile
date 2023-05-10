@@ -53,6 +53,22 @@ const PlaylistsList = ({
         setPlaylists(res.data.playlists);
     };
 
+    const searchBar = () => {
+        return (
+            Platform.OS === "ios" ? (
+                <SearchBarIOS
+                    value={search}
+                    onChangeText={text => setSearch(text)}
+                />
+            ) : (
+                <SearchBarAndroid
+                    value={search}
+                    onChangeText={text => setSearch(text)}
+                />
+            )
+        )
+    };
+
     const playlistItem = (obj) => {
         const playlist = obj.item;
 
@@ -77,21 +93,7 @@ const PlaylistsList = ({
                 data={playlists}
                 renderItem={playlistItem}
                 keyExtractor={item => item.id}
-                ListHeaderComponent={() => {
-                    return (
-                        Platform.OS === "ios" ? (
-                            <SearchBarIOS
-                                value={search}
-                                onChangeText={text => setSearch(text)}
-                            />
-                        ) : (
-                            <SearchBarAndroid
-                                value={search}
-                                onChangeText={text => setSearch(text)}
-                            />
-                        )
-                    )
-                }}
+                ListHeaderComponent={searchBar()}
             />
         </View>
     );
