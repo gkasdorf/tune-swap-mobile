@@ -1,5 +1,4 @@
 import Api from "../Api";
-import ApiResponse from "../ApiResponse";
 import {StartSwapRequest} from "./types/SwapApiRequests";
 import {GetAllSwapsResponse, GetSwapResponse, SongsNotFoundResponse, StartSwapResponse} from "./types/SwapApiResponses";
 import {Swap} from "../types/SwapTypes";

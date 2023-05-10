@@ -9,7 +9,6 @@ import LoadingModal from "../../../ui/LoadingModal";
 import SwapStatus from "../../../api/enums/SwapStatus";
 import {AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
 import Constants from "expo-constants";
-import {Icon} from "@rneui/base";
 
 const bannerAdUnitId = __DEV__ ? TestIds.BANNER : Constants.expoConfig.extra.admobBannerId;
 // eslint-disable-next-line no-undef

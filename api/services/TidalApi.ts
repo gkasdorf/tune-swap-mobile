@@ -1,6 +1,7 @@
 import Api from "../Api";
 import ApiResponse from "../ApiResponse";
 import {Platform} from "react-native";
+import {GetUserPlaylistsResponse} from "./types/GetUserPlaylistsResponse";
 
 class TidalApi {
     public static getAuthUrl = async (): Promise<ApiResponse> => {
@@ -23,10 +24,10 @@ class TidalApi {
         }) as ApiResponse;
     };
 
-    public static getUserPlaylists = async (): Promise<ApiResponse> => {
+    public static getUserPlaylists = async (): Promise<GetUserPlaylistsResponse> => {
         const api = new Api("/v2/tidal/me/playlists");
 
-        return await api.get() as ApiResponse;
+        return await api.get() as GetUserPlaylistsResponse;
     };
 }
 

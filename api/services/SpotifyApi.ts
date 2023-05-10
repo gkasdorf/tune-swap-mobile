@@ -1,5 +1,6 @@
 import ApiResponse from "../ApiResponse";
 import Api from "../Api";
+import {GetUserPlaylistsResponse} from "./types/GetUserPlaylistsResponse";
 
 export const SPOTIFY_REDIRECT_URL = "tuneswap://home/settings/Spotify";
 
@@ -25,10 +26,10 @@ class SpotifyApi {
         return await api.get(data) as ApiResponse;
     };
 
-    public static getUserPlaylists = async (): Promise<ApiResponse> => {
+    public static getUserPlaylists = async (): Promise<GetUserPlaylistsResponse> => {
         const api = new Api("/v2/spotify/me/playlists");
 
-        return await api.get() as ApiResponse;
+        return await api.get() as GetUserPlaylistsResponse;
     };
 }
 

@@ -11,12 +11,12 @@ import Info from "../../ui/Info";
 import {selectUser, setUser} from "../../slices/user/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import * as AppleAuthentication from "expo-apple-authentication";
 import {
     AppleAuthenticationButton,
     AppleAuthenticationButtonStyle,
     AppleAuthenticationButtonType
 } from "expo-apple-authentication";
-import * as AppleAuthentication from "expo-apple-authentication";
 import UserApi from "../../api/user/UserApi";
 
 const Login = () => {
@@ -75,7 +75,10 @@ const Login = () => {
             });
 
             const name = credential.fullName.givenName;
-            const resp = await UserApi.loginWithApple(credential.authorizationCode, name);
+            const resp = await UserApi.loginWithApple({
+                code: credential.authorizationCode,
+                name: name
+            });
 
             if(!resp.success) {
                 console.log("Error");

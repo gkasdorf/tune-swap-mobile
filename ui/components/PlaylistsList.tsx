@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from "react";
-import PropTypes from "prop-types";
 import ServicesApi from "../../api/services/ServicesApi";
 import {Alert, FlatList} from "react-native";
 import {ListItem} from "@rneui/themed";
 import ImageOrIcon from "./ImageOrIcon";
+import MusicService from "../../api/enums/MusicService";
 
-const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = ""}) => {
-    const [playlists, setPlaylists] = useState([]);
+interface PlaylistsListProps {
+    service: MusicService|string;
+    setLoading: (loading: boolean) => void;
+    onPlaylistPress: (id: string, name: string) => void;
+    searchTerm?: string;
+    includeLibrary?: boolean;
+}
+
+const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = "", includeLibrary = false}: PlaylistsListProps) => {
+    const [playlists, setPlaylists] = useState(null);
 
     useEffect(() => {
         loadPlaylists();
@@ -20,6 +28,15 @@ const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = ""}) 
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
+        }
+
+        if(includeLibrary) {
+            res.data.playlists.unshift({
+                id: "library",
+                name: "Your Library",
+                description: null,
+                image: null
+            });
         }
 
         setLoading(false);
@@ -46,13 +63,6 @@ const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = ""}) 
     return (
         <FlatList data={playlists} renderItem={playlistItem} keyExtractor={item => item.id} />
     );
-};
-
-PlaylistsList.propTypes = {
-    service: PropTypes.string,
-    setLoading: PropTypes.func,
-    onPlaylistPress: PropTypes.func,
-    searchTerm: PropTypes.string
 };
 
 export default PlaylistsList;

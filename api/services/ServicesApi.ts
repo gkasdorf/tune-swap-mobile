@@ -1,11 +1,11 @@
-import ApiResponse from "../ApiResponse";
 import MusicService from "../enums/MusicService";
 import SpotifyApi from "./SpotifyApi";
 import AppleMusicApi from "./AppleMusicApi";
 import TidalApi from "./TidalApi";
+import {GetUserPlaylistsResponse} from "./types/GetUserPlaylistsResponse";
 
 class ServicesApi {
-    public static getUserPlaylists = async(service: MusicService): Promise<ApiResponse> => {
+    public static getUserPlaylists = async(service: MusicService|string): Promise<GetUserPlaylistsResponse> => {
         switch(service) {
         case MusicService.Spotify: {
             return await SpotifyApi.getUserPlaylists();
