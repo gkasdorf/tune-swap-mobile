@@ -23,7 +23,7 @@ const SwapsScreen = () => {
     }, []));
 
     const loadSwaps = async (pull = false): Promise<void> => {
-        if(!pull) setLoading(true);
+        if (!pull) setLoading(true);
 
         setHasTwo(await has(2));
 
@@ -40,10 +40,11 @@ const SwapsScreen = () => {
     const swapItem = (obj) => {
         const swap = obj.item;
 
-        if(swap.type === "ad") {
+        if (swap.type === "ad") {
             return (
                 <View key={swap.key}>
-                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
+                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                              requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
                 </View>
             );
         }
@@ -54,7 +55,7 @@ const SwapsScreen = () => {
                     <ListItem.Title>{swap.playlist_name}</ListItem.Title>
                     <ListItem.Subtitle>{swap.from_service} to {swap.to_service}</ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron />
+                <ListItem.Chevron/>
             </ListItem>
         );
     };
@@ -64,7 +65,7 @@ const SwapsScreen = () => {
             <Stack.Screen
                 options={{
                     headerRight: () => (
-                        <NewSwapButton />
+                        <NewSwapButton/>
                     )
                 }}
             />
@@ -92,13 +93,13 @@ const SwapsScreen = () => {
                         initialNumToRender={15}
                         windowSize={15}
                         refreshControl={
-                            <RefreshControl refreshing={loading} onRefresh={() => loadSwaps(true)} />
+                            <RefreshControl refreshing={loading} onRefresh={() => loadSwaps(true)}/>
                         }
                     />
                 )
             }
 
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
         </View>
     );
 };

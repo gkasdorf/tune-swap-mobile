@@ -24,7 +24,7 @@ const SwapStepThreeScreen = () => {
                     And where are we swapping to?
                 </Text>
             </View>
-            <ServicesList onServicePress={onServicePress} />
+            <ServicesList onServicePress={onServicePress}/>
         </View>
     );
 };

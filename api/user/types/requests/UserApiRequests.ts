@@ -5,7 +5,7 @@ export interface LoginRequest {
 
 export interface AppleLoginRequest {
     code: string;
-    name?: string|null;
+    name?: string | null;
 }
 
 export interface SignupRequest {

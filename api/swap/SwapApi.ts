@@ -25,7 +25,7 @@ class SwapApi {
         let total = 0;
 
         res.data.swaps.forEach((item: Swap) => {
-            if(count % 4 === 0) {
+            if (count % 4 === 0) {
                 swaps.push({key: total, type: "ad"});
                 total++;
             }

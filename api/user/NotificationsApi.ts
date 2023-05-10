@@ -6,7 +6,7 @@ class NotificationsApi {
     public static enableNotifications = async (deviceId: string): Promise<EnableNotificationsResponse> => {
         let url: string;
 
-        if(Platform.OS === "ios") {
+        if (Platform.OS === "ios") {
             url = "/v2/user/notifications/ios/enable";
         } else {
             url = "/v2/user/notifications/android/enable";
@@ -24,7 +24,7 @@ class NotificationsApi {
     public static disableNotifications = async (deviceId: string): Promise<DisableNotificationsResponse> => {
         let url: string;
 
-        if(Platform.OS === "ios") {
+        if (Platform.OS === "ios") {
             url = "/v2/user/notifications/ios/disable";
         } else {
             url = "/v2/user/notifications/android/disable";

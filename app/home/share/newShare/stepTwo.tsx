@@ -21,7 +21,7 @@ const ShareStepTwoScreen = () => {
             playlist_id: id
         });
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -33,13 +33,14 @@ const ShareStepTwoScreen = () => {
 
     return (
         <View style={styles.main}>
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             <View style={{padding: 20}}>
                 <Text style={{textAlign: "center"}}>
                     Now, select the playlist you want to share...
                 </Text>
             </View>
-            <PlaylistsList service={service?.toString() ?? null} setLoading={setLoading} onPlaylistPress={onPlaylistPress} />
+            <PlaylistsList service={service?.toString() ?? null} setLoading={setLoading}
+                           onPlaylistPress={onPlaylistPress}/>
         </View>
     );
 };

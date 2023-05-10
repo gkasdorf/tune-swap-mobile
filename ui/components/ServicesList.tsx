@@ -42,7 +42,7 @@ const ServicesList = ({onServicePress}) => {
                             <ListItem.Title>Spotify</ListItem.Title>
                             <ListItem.Subtitle>{spotifyEmail}</ListItem.Subtitle>
                         </ListItem.Content>
-                        <ListItem.Chevron />
+                        <ListItem.Chevron/>
                     </ListItem>
                 ) : null
             }
@@ -54,7 +54,7 @@ const ServicesList = ({onServicePress}) => {
                             <ListItem.Title>Apple Music</ListItem.Title>
                             <ListItem.Subtitle>Linked</ListItem.Subtitle>
                         </ListItem.Content>
-                        <ListItem.Chevron />
+                        <ListItem.Chevron/>
                     </ListItem>
                 ) : null
             }
@@ -66,7 +66,7 @@ const ServicesList = ({onServicePress}) => {
                             <ListItem.Title>Tidal</ListItem.Title>
                             <ListItem.Subtitle>{tidalUsername}</ListItem.Subtitle>
                         </ListItem.Content>
-                        <ListItem.Chevron />
+                        <ListItem.Chevron/>
                     </ListItem>
                 ) : null
             }

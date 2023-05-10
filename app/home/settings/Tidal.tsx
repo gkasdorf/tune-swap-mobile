@@ -32,23 +32,23 @@ const TidalScreen = () => {
     const onSignoutPress = async (): Promise<void> => {
         Alert.alert("Sign out", "Are you sure you wish to sign out of Tidal?\n\nYou will be unable to" +
             "transfer music between other services and Tidal until you sign back in.",
-        [
-            {
-                text: "Cancel",
-                style: "cancel"
-            },
-            {
-                text: "Sign out",
-                onPress: async () => {
-                    setIsAuthed(false);
-                    setUsername("");
-
-                    await AsyncStorage.setItem("@hasTidal", "false");
-                    await AsyncStorage.setItem("@tidalUsername", "");
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
                 },
-                isPreferred: true
-            }
-        ]);
+                {
+                    text: "Sign out",
+                    onPress: async () => {
+                        setIsAuthed(false);
+                        setUsername("");
+
+                        await AsyncStorage.setItem("@hasTidal", "false");
+                        await AsyncStorage.setItem("@tidalUsername", "");
+                    },
+                    isPreferred: true
+                }
+            ]);
     };
 
     return (
@@ -71,7 +71,7 @@ const TidalScreen = () => {
                         accessory={"DisclosureIndicator"}
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
-                            if(isAuthed) {
+                            if (isAuthed) {
                                 onSignoutPress();
                             } else {
                                 onAuthPress();

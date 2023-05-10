@@ -21,7 +21,7 @@ const ViewShareScreen = () => {
 
     useEffect(() => {
         return () => {
-            if(reload) clearInterval(reload);
+            if (reload) clearInterval(reload);
         };
     }, []);
 
@@ -32,17 +32,17 @@ const ViewShareScreen = () => {
     const loadShare = async () => {
         const res = await ShareApi.get(id.toString());
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
         }
 
-        if(!res.data.share.ready && !reload) {
+        if (!res.data.share.ready && !reload) {
             reload = setInterval(loadShare, 5000);
         }
 
-        if(res.data.share.ready && reload) {
+        if (res.data.share.ready && reload) {
             clearInterval(reload);
             reload = null;
         }
@@ -52,7 +52,7 @@ const ViewShareScreen = () => {
     };
 
     const getStatusVariant = (status: boolean): StatusIconVariant => {
-        if(status) {
+        if (status) {
             return "success";
         } else {
             return "pending";
@@ -100,7 +100,7 @@ const ViewShareScreen = () => {
                         <Text h3 style={{textAlign: "center"}}>{share.playlist.name}</Text>
                         <Text style={{textAlign: "center"}}>Playlist from {share.playlist.service}</Text>
                         <View style={styles.status}>
-                            <StatusIcon variant={getStatusVariant(share.ready)} />
+                            <StatusIcon variant={getStatusVariant(share.ready)}/>
                             <Text style={{marginTop: 10}}>
                                 {
                                     share.ready ? "Your share is ready!" : "We are getting your share ready. Please wait..."
@@ -118,7 +118,7 @@ const ViewShareScreen = () => {
                     </View>
                 )
             }
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
         </ScrollView>
     );
 };

@@ -62,7 +62,7 @@ const SettingsScreen = () => {
                 onPress: async () => {
                     const res = await UserApi.delete();
 
-                    if(!res.success) {
+                    if (!res.success) {
                         Alert.alert("Error", res.message);
                         return;
                     }
@@ -168,27 +168,37 @@ const SettingsScreen = () => {
                     <Cell
                         title={"Support"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => { Linking.openURL("mailto:support@tuneswap.app").then(); }}
+                        onPress={() => {
+                            Linking.openURL("mailto:support@tuneswap.app").then();
+                        }}
                     />
                     <Cell
                         title={"Privacy Policy"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => { Linking.openURL("https://tuneswap.app/privacy").then(); }}
+                        onPress={() => {
+                            Linking.openURL("https://tuneswap.app/privacy").then();
+                        }}
                     />
                     <Cell
                         title={"License"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => {router.push("/home/settings/licenses"); }}
+                        onPress={() => {
+                            router.push("/home/settings/licenses");
+                        }}
                     />
                     <Cell
                         title={"GitHub"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => { Linking.openURL("https://github.com/gkasdorf/tune-swap-mobile").then(); }}
+                        onPress={() => {
+                            Linking.openURL("https://github.com/gkasdorf/tune-swap-mobile").then();
+                        }}
                     />
                     <Cell
                         title={"Trello"}
                         accessory={"DisclosureIndicator"}
-                        onPress={() => { Linking.openURL("https://trello.com/b/dOEkVxW7/tuneswap").then(); }}
+                        onPress={() => {
+                            Linking.openURL("https://trello.com/b/dOEkVxW7/tuneswap").then();
+                        }}
                     />
                 </Section>
 

@@ -24,7 +24,7 @@ const NotificationsScreen = () => {
 
         const deviceId = await AsyncStorage.getItem("@deviceToken");
 
-        if(value) {
+        if (value) {
             await NotificationsApi.enableNotifications(deviceId);
         } else {
             await NotificationsApi.disableNotifications(deviceId);

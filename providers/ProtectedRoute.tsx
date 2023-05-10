@@ -14,7 +14,7 @@ const ProtectedRoute = ({children}) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if(!navigationState?.key) {
+        if (!navigationState?.key) {
             return;
         }
 
@@ -22,7 +22,7 @@ const ProtectedRoute = ({children}) => {
     }, [navigationState?.key]);
 
     useEffect(() => {
-        if(error && !loading) {
+        if (error && !loading) {
             router.replace("/login");
         }
     }, [error, loading, success]);
@@ -30,7 +30,7 @@ const ProtectedRoute = ({children}) => {
     const load = async () => {
         const token = await AsyncStorage.getItem("@token");
 
-        if(!token) {
+        if (!token) {
             router.replace("landing/Login");
             return;
         }

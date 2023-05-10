@@ -10,13 +10,13 @@ import * as PushNotifications from "../notifications/PushNotifications";
 PushNotifications.handlers();
 
 const Layout = () => {
-    const [fontsLoaded ] = useFonts({
+    const [fontsLoaded] = useFonts({
         "OpenSans": require("../assets/fonts/OpenSans.ttf"),
         "OpenSans_bold": require("../assets/fonts/OpenSans_bold.ttf")
     });
 
-    if(!fontsLoaded) {
-        return <SplashScreen />;
+    if (!fontsLoaded) {
+        return <SplashScreen/>;
     }
 
     return (
@@ -27,7 +27,7 @@ const Layout = () => {
                         headerShown: false
                     }}
                 >
-                    <Stack.Screen name={"index"} options={{title: "Home"}} />
+                    <Stack.Screen name={"index"} options={{title: "Home"}}/>
                 </Stack>
             </ThemeProvider>
         </Provider>

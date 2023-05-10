@@ -18,14 +18,14 @@ const ShareScreen = () => {
     }, []));
 
     const loadShares = async (pull = false) => {
-        if(!pull) setLoading(true);
+        if (!pull) setLoading(true);
 
         const doesHaveOne = await has(1);
         setHasOne(doesHaveOne);
 
         const res = await ShareApi.getAll();
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -36,7 +36,7 @@ const ShareScreen = () => {
     };
 
     const onSharePress = (id: string): void => {
-        router.push({pathname: "/home/share/viewShare", params: { id: id }});
+        router.push({pathname: "/home/share/viewShare", params: {id: id}});
     };
 
     const shareItem = (obj) => {
@@ -49,7 +49,7 @@ const ShareScreen = () => {
                     <ListItem.Title>{share.playlist.name}</ListItem.Title>
                     <ListItem.Subtitle>{share.playlist.service}</ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron />
+                <ListItem.Chevron/>
             </ListItem>
         );
     };
@@ -68,7 +68,7 @@ const ShareScreen = () => {
                 }}
             />
 
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             {
                 !hasOne && (
                     <View style={{padding: 20}}>
@@ -93,7 +93,7 @@ const ShareScreen = () => {
                         initialNumToRender={15}
                         windowSize={15}
                         refreshControl={
-                            <RefreshControl refreshing={loading} onRefresh={() => loadShares(true)} />
+                            <RefreshControl refreshing={loading} onRefresh={() => loadShares(true)}/>
                         }
                     />
                 )

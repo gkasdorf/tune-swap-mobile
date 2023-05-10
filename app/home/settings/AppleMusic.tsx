@@ -32,13 +32,13 @@ const AppleMusicScreen = () => {
             preferEphemeralSession: !__DEV__
         });
 
-        if(amRes.type === WebBrowserResultType.CANCEL) {
+        if (amRes.type === WebBrowserResultType.CANCEL) {
             return;
         }
 
         const success = amRes.url.split("?success=")[1] === "true";
 
-        if(!success) {
+        if (!success) {
             Alert.alert("Error", "There was an error linking your Apple Music account.");
             return;
         }
@@ -51,21 +51,21 @@ const AppleMusicScreen = () => {
     const onSignoutPress = async (): Promise<void> => {
         Alert.alert("Sign out", "Are you sure you wish to sign out of Apple Music?\n\nYou will be unable to" +
             "transfer music between other services and Apple Music until you sign back in.",
-        [
-            {
-                text: "Cancel",
-                style: "cancel"
-            },
-            {
-                text: "Sign out",
-                onPress: async () => {
-                    setIsAuthed(false);
-
-                    await AsyncStorage.setItem("@hasAppleMusic", "false");
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
                 },
-                isPreferred: true
-            }
-        ]);
+                {
+                    text: "Sign out",
+                    onPress: async () => {
+                        setIsAuthed(false);
+
+                        await AsyncStorage.setItem("@hasAppleMusic", "false");
+                    },
+                    isPreferred: true
+                }
+            ]);
     };
 
     return (
@@ -88,7 +88,7 @@ const AppleMusicScreen = () => {
                         accessory={"DisclosureIndicator"}
                         titleTextColor={isAuthed ? "red" : appleBlue}
                         onPress={() => {
-                            if(isAuthed) {
+                            if (isAuthed) {
                                 onSignoutPress();
                             } else {
                                 onAuthPress();

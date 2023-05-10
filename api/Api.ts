@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 class Api {
     static baseUrl: string = Constants.expoConfig.extra.apiUrl;
 
-    private readonly options: {headers: object};
+    private readonly options: { headers: object };
     private readonly url: string;
 
     constructor(url: string) {
@@ -24,7 +24,7 @@ class Api {
     private setToken = async (): Promise<void> => {
         const token = await AsyncStorage.getItem("@token");
 
-        if(token) {
+        if (token) {
             this.options.headers["Authorization"] = `Bearer ${token}`;
         }
     };
@@ -40,7 +40,7 @@ class Api {
                 status: res.status,
                 data: res.data
             };
-        } catch(e) {
+        } catch (e) {
             return {
                 success: false,
                 status: e.response.status,
@@ -49,12 +49,12 @@ class Api {
         }
     };
 
-    public get = async(data?: { [key: string]: string }): Promise<object> => {
+    public get = async (data?: { [key: string]: string }): Promise<object> => {
         await this.setToken();
 
         let url: string;
 
-        if(data) {
+        if (data) {
             const query: string = new URLSearchParams(data).toString();
             url = `${this.url}?${query}`;
         } else {
@@ -69,7 +69,7 @@ class Api {
                 status: res.status,
                 data: res.data
             };
-        } catch(e) {
+        } catch (e) {
             return {
                 success: false,
                 status: e.response.status,

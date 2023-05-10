@@ -42,7 +42,7 @@ class UserApi {
 
         const res: VerifyResponse = await api.get() as VerifyResponse;
 
-        if(res.status === 401) {
+        if (res.status === 401) {
             this.signOut();
             return;
         }

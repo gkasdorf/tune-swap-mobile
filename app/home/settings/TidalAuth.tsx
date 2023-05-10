@@ -23,10 +23,10 @@ const TidalAuth = () => {
         setAuthData(authDataResp.data.url);
     };
 
-    const doAuth = async(code) => {
+    const doAuth = async (code) => {
         const res = await TidalApi.auth(code, authData.codeVerifier);
 
-        if(!res.success) {
+        if (!res.success) {
             Alert.alert("Error", res.message);
             return;
         }
@@ -42,10 +42,10 @@ const TidalAuth = () => {
     const stateChange = (e): void => {
         const url = (Platform.OS === "android") ? "https://tidal.com/android/login/auth" : "https://listen.tidal.com/login/auth";
 
-        if(e.url.toString().includes(url)) {
+        if (e.url.toString().includes(url)) {
             const code = e.url.split("code=")[1].split("&state=")[0];
 
-            if(!didAuth) {
+            if (!didAuth) {
                 doAuth(code);
                 didAuth = true;
             }

@@ -19,16 +19,16 @@ export const handlers = () => {
 export const register = async () => {
     let token;
 
-    if(Device.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    if (Device.isDevice) {
+        const {status: existingStatus} = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
 
-        if(existingStatus !== "granted") {
-            const { status } = await Notifications.requestPermissionsAsync();
+        if (existingStatus !== "granted") {
+            const {status} = await Notifications.requestPermissionsAsync();
             finalStatus = status;
         }
 
-        if(finalStatus !== "granted") {
+        if (finalStatus !== "granted") {
             console.log("Not granted.");
 
             await AsyncStorage.setItem("@notificationsEnabled", "false");
@@ -38,7 +38,7 @@ export const register = async () => {
         token = (await Notifications.getDevicePushTokenAsync()).data;
         console.log("Got the token", token);
 
-        if(await AsyncStorage.getItem("@deviceToken") === token) {
+        if (await AsyncStorage.getItem("@deviceToken") === token) {
             console.log("Already set, we don't need to do anything.");
             return;
         }
@@ -51,7 +51,7 @@ export const register = async () => {
         console.log("Not a real device.");
     }
 
-    if(Platform.OS === "android") {
+    if (Platform.OS === "android") {
         Notifications.setNotificationChannelAsync("default", {
             name: "default",
             importance: Notifications.AndroidImportance.DEFAULT,

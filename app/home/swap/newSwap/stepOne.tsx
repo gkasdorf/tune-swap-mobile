@@ -28,7 +28,7 @@ const SwapStepOneScreen = () => {
                     First, tell us where you want to swap from.
                 </Text>
             </View>
-            <ServicesList onServicePress={onServicePress} />
+            <ServicesList onServicePress={onServicePress}/>
         </View>
     );
 };

@@ -15,7 +15,7 @@ const SwapStepTwoScreen = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
 
-    const onPlaylistPress = async(id: string, name: string) => {
+    const onPlaylistPress = async (id: string, name: string) => {
         const playlistInfo = {
             playlistId: id,
             playlistName: name,
@@ -29,13 +29,14 @@ const SwapStepTwoScreen = () => {
 
     return (
         <View style={styles.main}>
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             <View style={{padding: 20}}>
                 <Text style={{textAlign: "center"}}>
                     Now, select the playlist you want to swap...
                 </Text>
             </View>
-            <PlaylistsList service={fromService} setLoading={setLoading} onPlaylistPress={onPlaylistPress} includeLibrary />
+            <PlaylistsList service={fromService} setLoading={setLoading} onPlaylistPress={onPlaylistPress}
+                           includeLibrary/>
         </View>
     );
 };

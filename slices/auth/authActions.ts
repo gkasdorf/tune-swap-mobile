@@ -9,7 +9,7 @@ export const signup = createAsyncThunk(
     async (data: SignupForm, thunkAPI) => {
         const res = await UserApi.register(data);
 
-        if(!res.success) {
+        if (!res.success) {
             return thunkAPI.rejectWithValue(res.message);
         }
 
@@ -51,7 +51,7 @@ export const loadUser = createAsyncThunk(
     async (data: { token: string }, thunkAPI) => {
         const res = await UserApi.verify();
 
-        if(!res.success) {
+        if (!res.success) {
             return thunkAPI.rejectWithValue(res.message);
         }
 

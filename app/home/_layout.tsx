@@ -12,7 +12,7 @@ const HomeLayout = () => {
                         headerShown: false,
                         tabBarLabel: "Swap",
                         tabBarIcon: ({color}) => (
-                            <Icon name={"swap-calls"} type={"material"} color={color} />
+                            <Icon name={"swap-calls"} type={"material"} color={color}/>
                         )
                     }}
                 />
@@ -23,7 +23,7 @@ const HomeLayout = () => {
                         headerShown: false,
                         tabBarLabel: "Share",
                         tabBarIcon: ({color}) => (
-                            <Icon name={"share"} type={"material"} color={color} />
+                            <Icon name={"share"} type={"material"} color={color}/>
                         )
                     }}
                 />
@@ -34,7 +34,7 @@ const HomeLayout = () => {
                         headerShown: false,
                         tabBarLabel: "Settings",
                         tabBarIcon: ({color}) => (
-                            <Icon name={"settings"} type={"material"} color={color} />
+                            <Icon name={"settings"} type={"material"} color={color}/>
                         )
                     }}
                 />

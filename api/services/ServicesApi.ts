@@ -5,17 +5,17 @@ import TidalApi from "./TidalApi";
 import {GetUserPlaylistsResponse} from "./types/GetUserPlaylistsResponse";
 
 class ServicesApi {
-    public static getUserPlaylists = async(service: MusicService|string): Promise<GetUserPlaylistsResponse> => {
-        switch(service) {
-        case MusicService.Spotify: {
-            return await SpotifyApi.getUserPlaylists();
-        }
-        case MusicService.AppleMusic: {
-            return await AppleMusicApi.getUserPlaylists();
-        }
-        case MusicService.Tidal: {
-            return await TidalApi.getUserPlaylists();
-        }
+    public static getUserPlaylists = async (service: MusicService | string): Promise<GetUserPlaylistsResponse> => {
+        switch (service) {
+            case MusicService.Spotify: {
+                return await SpotifyApi.getUserPlaylists();
+            }
+            case MusicService.AppleMusic: {
+                return await AppleMusicApi.getUserPlaylists();
+            }
+            case MusicService.Tidal: {
+                return await TidalApi.getUserPlaylists();
+            }
         }
     };
 }

@@ -6,14 +6,20 @@ import ImageOrIcon from "./ImageOrIcon";
 import MusicService from "../../api/enums/MusicService";
 
 interface PlaylistsListProps {
-    service: MusicService|string;
+    service: MusicService | string;
     setLoading: (loading: boolean) => void;
     onPlaylistPress: (id: string, name: string) => void;
     searchTerm?: string;
     includeLibrary?: boolean;
 }
 
-const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = "", includeLibrary = false}: PlaylistsListProps) => {
+const PlaylistsList = ({
+                           service,
+                           setLoading,
+                           onPlaylistPress,
+                           searchTerm = "",
+                           includeLibrary = false
+                       }: PlaylistsListProps) => {
     const [playlists, setPlaylists] = useState(null);
 
     useEffect(() => {
@@ -24,13 +30,13 @@ const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = "", i
         setLoading(true);
         const res = await ServicesApi.getUserPlaylists(service);
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
         }
 
-        if(includeLibrary) {
+        if (includeLibrary) {
             res.data.playlists.unshift({
                 id: "library",
                 name: "Your Library",
@@ -46,22 +52,22 @@ const PlaylistsList = ({service, setLoading, onPlaylistPress, searchTerm = "", i
     const playlistItem = (obj) => {
         const playlist = obj.item;
 
-        if(searchTerm !== "" && !playlist.name.toLowerCase().includes(searchTerm.toLowerCase())) return null;
+        if (searchTerm !== "" && !playlist.name.toLowerCase().includes(searchTerm.toLowerCase())) return null;
 
         return (
             <ListItem bottomDivider onPress={() => onPlaylistPress(playlist.id, playlist.name)}>
-                <ImageOrIcon id={playlist.id} image={playlist.image} service={service} />
+                <ImageOrIcon id={playlist.id} image={playlist.image} service={service}/>
                 <ListItem.Content>
                     <ListItem.Title>{playlist.name}</ListItem.Title>
                     <ListItem.Subtitle>{playlist.description ? playlist.description.replace(/<[^>]*>?/gm, "") : "No Description"}</ListItem.Subtitle>
                 </ListItem.Content>
-                <ListItem.Chevron />
+                <ListItem.Chevron/>
             </ListItem>
         );
     };
 
     return (
-        <FlatList data={playlists} renderItem={playlistItem} keyExtractor={item => item.id} />
+        <FlatList data={playlists} renderItem={playlistItem} keyExtractor={item => item.id}/>
     );
 };
 

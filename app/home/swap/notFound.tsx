@@ -18,7 +18,7 @@ const NotFoundScreen = () => {
     const loadNotFound = async (): Promise<void> => {
         const res = await SwapApi.getNotFound(id);
 
-        if(!res.success) {
+        if (!res.success) {
             setLoading(false);
             Alert.alert("Error", res.message);
             return;
@@ -43,7 +43,7 @@ const NotFoundScreen = () => {
 
     return (
         <View style={{flex: 1}}>
-            <LoadingModal loading={loading} />
+            <LoadingModal loading={loading}/>
             <FlatList
                 data={notFound}
                 extraData={notFound}
