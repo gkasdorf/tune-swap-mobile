@@ -140,6 +140,20 @@ const SettingsScreen = () => {
                         detail={user.email}
                     />
                     <Cell
+                        cellStyle={"RightDetail"}
+                        title={"Subscription"}
+                        detail={"None"}
+                        accessory={"DisclosureIndicator"}
+                        onPress={() => router.push("home/settings/subscription")}
+                    />
+                </Section>
+
+                <Section
+                    roundedCorners={true}
+                    hideSurroundingSeparators={true}
+                    header={"ACCOUNT SETTINGS"}
+                >
+                    <Cell
                         title={"Notifications"}
                         accessory={"DisclosureIndicator"}
                         onPress={() => router.push("home/settings/Notifications")}
