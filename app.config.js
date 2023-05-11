@@ -21,7 +21,7 @@ export default {
         "ios": {
             "supportsTablet": false,
             "bundleIdentifier": "com.gkasdorf.tuneswap",
-            "buildNumber": "14",
+            "buildNumber": "15",
             "associatedDomains": ["applinks:tuneswap.app"]
         },
         "android": {
