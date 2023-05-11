@@ -39,11 +39,14 @@ const LandingScreen = () => {
             });
 
             const name = credential.fullName.givenName;
-            const resp = await UserApi.loginWithApple(credential.authorizationCode, name);
+            const resp = await UserApi.loginWithApple({
+                code: credential.authorizationCode,
+                name: name
+            });
 
             if (!resp.success) {
                 console.log("Error");
-                Alert.alert("Error", resp.data.message);
+                Alert.alert("Error", resp.message);
                 return;
             }
 
