@@ -52,7 +52,7 @@ const ViewSwapScreen = () => {
     useFocusEffect(useCallback(() => {
         loadSwap().then();
 
-        if (isNew) {
+        if (isNew && !subscribed) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
                 setAdLoaded(true);
             });

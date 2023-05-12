@@ -44,7 +44,9 @@ const SwapsScreen = () => {
     const swapItem = (obj) => {
         const swap = obj.item;
 
-        if (swap.type === "ad" && !subscribed) {
+        if (swap.type === "ad") {
+            if(subscribed) return;
+
             return (
                 <View key={swap.key}>
                     <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>

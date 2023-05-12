@@ -9,6 +9,8 @@ import SwapStatus from "../../../api/enums/SwapStatus";
 import {HeaderBackButton} from "@react-navigation/elements";
 import {AdEventType, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
 import Constants from "expo-constants";
+import {useAppSelector} from "../../../hooks";
+import {selectUser} from "../../../slices/user/userSlice";
 
 // eslint-disable-next-line no-undef
 const interstitialAdUnitId = __DEV__ ? TestIds.INTERSTITIAL : Constants.expoConfig.extra.admobInterId;
@@ -23,6 +25,8 @@ const ViewShareScreen = () => {
     const [loading, setLoading] = useState(true);
 
     const [adLoaded, setAdLoaded] = useState(false);
+
+    const {subscribed} = useAppSelector(selectUser);
 
     const {id, isNew} = useSearchParams();
     const router = useRouter();
@@ -46,7 +50,7 @@ const ViewShareScreen = () => {
     useFocusEffect(useCallback(() => {
         loadCopy().then();
 
-        if (isNew) {
+        if (isNew && !subscribed) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
                 setAdLoaded(true);
             });
