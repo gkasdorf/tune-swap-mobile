@@ -46,7 +46,8 @@ export const {
     setSyncFromService,
     setSyncToService,
     setSyncFromId,
-    setSyncToId
+    setSyncToId,
+    clearSync
 } = syncSlice.actions;
 
 export default syncSlice.reducer;

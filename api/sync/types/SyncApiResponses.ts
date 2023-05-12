@@ -3,7 +3,7 @@ import {Sync} from "../../types/SyncTypes";
 
 export interface CreateSyncResponse extends ApiResponse {
     data: {
-        sync: string
+        sync: Sync
     }
 }
 
