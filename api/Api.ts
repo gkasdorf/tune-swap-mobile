@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiResponse from "./ApiResponse";
 
 class Api {
     static baseUrl: string = Constants.expoConfig.extra.apiUrl;
@@ -29,27 +30,27 @@ class Api {
         }
     };
 
-    public post = async (data: object): Promise<object> => {
+    public post = async (data: object): Promise<ApiResponse> => {
         await this.setToken();
 
         try {
             const res = await axios.post(this.url, data, this.options);
 
-            return {
+            return new ApiResponse({
                 success: true,
                 status: res.status,
                 data: res.data
-            };
+            });
         } catch (e) {
-            return {
+            return new ApiResponse({
                 success: false,
                 status: e.response.status,
                 data: e.response.data
-            };
+            });
         }
     };
 
-    public get = async (data?: { [key: string]: string }): Promise<object> => {
+    public get = async (data?: { [key: string]: string }): Promise<ApiResponse> => {
         await this.setToken();
 
         let url: string;
@@ -64,17 +65,17 @@ class Api {
         try {
             const res = await axios.get(url, this.options);
 
-            return {
+            return new ApiResponse({
                 success: true,
                 status: res.status,
                 data: res.data
-            };
+            });
         } catch (e) {
-            return {
+            return new ApiResponse({
                 success: false,
                 status: e.response.status,
                 data: e.response.data
-            };
+            });
         }
     };
 }
