@@ -1,36 +1,63 @@
 import React, {useCallback, useEffect, useState} from "react";
 import SubscriptionApi from "../../../api/user/SubscriptionApi";
-import {Alert, Button as RNButton, Platform, StyleSheet, View} from "react-native";
-import {Stack, useFocusEffect} from "expo-router";
+import {Alert, Platform, ScrollView, StyleSheet, View} from "react-native";
+import {useFocusEffect} from "expo-router";
 import {Button, Divider, Text} from "@rneui/themed";
 import {Icon} from "@rneui/base";
 import {
-    clearProductsIOS,
-    endConnection, finishTransaction, getSubscriptions,
+    deepLinkToSubscriptionsAndroid,
+    deepLinkToSubscriptionsIos,
+    endConnection,
+    finishTransaction,
+    getSubscriptions,
     initConnection,
-    PurchaseError, purchaseErrorListener, purchaseUpdatedListener,
+    PurchaseError,
+    purchaseErrorListener,
+    purchaseUpdatedListener,
     requestSubscription
-} from 'react-native-iap';
+} from "react-native-iap";
 import LoadingModal from "../../../ui/LoadingModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-const SubscriptionScreen = () => {
-    const [currentSubscription, setCurrentSubscription] = useState(null);
-    const [subscriptions, setSubscriptions] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [success, setSuccess] = useState(null);
+import {Subscription} from "../../../api/types/SubscriptionTypes";
+import SubscriptionType from "../../../api/enums/SubscriptionType";
+import {useAppDispatch} from "../../../hooks";
+import {setUserSubscribed} from "../../../slices/user/userSlice";
 
+const SubscriptionScreen = () => {
+    // This is going to be the current subscription of the user
+    const [currentSubscription, setCurrentSubscription] = useState<Subscription|null>(null);
+
+    // These are the data of the subscriptions from apple or play
+    const [plusSubscription, setPlusSubscription] = useState<object|null>(null);
+    const [turboSubscription, setTurboSubscription] = useState<object|null>(null);
+
+    // Just some boolz
+    const [loading, setLoading] = useState<boolean>(true);
+    const [success, setSuccess] = useState<boolean|null>(null);
+
+    // Event handlers
     let purchaseUpdateSubscription = null;
     let purchaseErrorSubscription = null;
 
+    const dispatch = useAppDispatch();
+
+    // Load everything whenever the screen comes into focus
     useFocusEffect(useCallback(() => {
         initConnection().then(() => {
-            clearProductsIOS().then(() => {
-                loadIap();
-                loadSubscription().then();
-            })
+            loadIap();
+            loadSubscription().then();
         });
     }, []));
 
+    // Once we get success, we will reload the subscription and update the subscribed status for the user
+    useEffect(() => {
+        if(success === true) {
+            loadSubscription().then(() => {
+                dispatch(setUserSubscribed(true));
+            });
+        }
+    }, [success]);
+
+    // Whenever we leave we need to remove the event handlers
     useEffect(() => {
         return () => {
             endConnection().then();
@@ -42,20 +69,20 @@ const SubscriptionScreen = () => {
             if(purchaseErrorSubscription) {
                 purchaseErrorSubscription.remove();
             }
-        }
+        };
     }, []);
 
+    // Load all IAP data
     const loadIap = () => {
         purchaseUpdateSubscription = purchaseUpdatedListener(async (purchase) => {
-            console.log(purchase);
-
-            const receipt = Platform.OS === 'ios' ? purchase.transactionReceipt : purchase.purchaseToken;
+            // Get the right receipt
+            const receipt = Platform.OS === "ios" ? purchase.transactionReceipt : purchase.purchaseToken;
 
             if (receipt) {
-                finishTransaction({purchase, isConsumable: false}).then((res) => {
-                    AsyncStorage.setItem("@receipt", receipt);
-
-                    setSuccess(true);
+                // Complete the transaction
+                finishTransaction({purchase, isConsumable: false}).then(() => {
+                    // Make the verification request
+                    verifyReceiptIos(receipt);
                 }).catch((err) => {
                     setSuccess(false);
                     Alert.alert("Error", err.message);
@@ -67,15 +94,16 @@ const SubscriptionScreen = () => {
             console.log(error.message);
         });
 
+        // Load the subscriptions
         getSubscriptions({skus: ["com.gkasdorf.tuneswap.plus", "com.gkasdorf.tuneswap.turbo"]}).then((res) => {
-            setSubscriptions(res);
-            console.log(res);
+            setTurboSubscription(res.find((item) => item.productId === "com.gkasdorf.tuneswap.turbo"));
+            setPlusSubscription(res.find((item) => item.productId === "com.gkasdorf.tuneswap.plus"));
         });
     };
 
     const loadSubscription = async (): Promise<void> => {
+        // Get the current subscription
         const res = await SubscriptionApi.getSubscription();
-        console.log(res);
 
         if(!res.success) {
             setLoading(false);
@@ -85,113 +113,129 @@ const SubscriptionScreen = () => {
 
         setCurrentSubscription(res.data.subscription);
         setLoading(false);
-    }
+    };
 
+    // Start the transaction
     const onSubscribePress = async (subscription): Promise<void> => {
         setLoading(true);
 
-        requestSubscription({sku: subscription.productId, andDangerouslyFinishTransactionAutomaticallyIOS: false}).then((res) => {
-            setLoading(false);
-            console.log(res);
-        }).catch((err) => {
+        // Attempt the transaction
+        requestSubscription({sku: subscription.productId, andDangerouslyFinishTransactionAutomaticallyIOS: false}).catch((err) => {
             setLoading(false);
             Alert.alert("Error", err.message);
         });
     };
 
+    const verifyReceiptIos = async (receipt) => {
+        // Make the verification request
+        const res = await SubscriptionApi.verifyReceiptIos(receipt);
+
+        if(!res.success) {
+            Alert.alert("Error", res.data.message);
+            setLoading(false);
+            setSuccess(false);
+            return;
+        }
+
+        setLoading(false);
+
+        // If we get a successful response we will update the user's subscription
+        setSuccess(true);
+    };
+
     return (
-        <View style={styles.main}>
+        <ScrollView style={styles.main}>
             <LoadingModal loading={loading}/>
-            <Stack.Screen options={{
-                headerRight: () => (
-                    <RNButton title={"Restore"} />
-                )
-            }}/>
 
-            {
-                currentSubscription === null ? (
-                    <View style={styles.content}>
-                        <View style={styles.item}>
-                            <View style={styles.itemIcon}>
-                                <Icon name={"local-fire-department"} type={"material"} size={50} color={"white"}/>
-                            </View>
-                            <View style={styles.itemText}>
-                                <Text h4>Turbo</Text>
-                                <Text>
-                                    - Syncs performed every 5 minutes
-                                </Text>
-                                <Text>
-                                    - Run up to three swaps at once
-                                </Text>
-                                <Text>
-                                    - All features of Plus
-                                </Text>
-                                <Text>
-                                    - All future features with no limitations
-                                </Text>
-                            </View>
-                        </View>
-
-                        <Button
-                            buttonStyle={styles.buttonColored}
-                            onPress={() => onSubscribePress(subscriptions[1])}
-                            disabled={subscriptions === null}
-                        >
-                            Subscribe for {subscriptions ? subscriptions[1].localizedPrice : "$2.99"}
-                        </Button>
-                        {/**/}
-                        <Divider style={{marginBottom: 20}}/>
-
-                        <View style={styles.item}>
-                            <View style={[styles.itemIcon, styles.itemIconYellow]}>
-                                <Icon name={"auto-awesome"} type={"material"} size={50} color={"white"}/>
-                            </View>
-                            <View style={styles.itemText}>
-                                <Text h4>Plus</Text>
-                                <Text>
-                                    Enjoy the same TuneSwap experience without ads.
-                                </Text>
-                                <Text>
-                                    - No need to re-visit the app to keep syncs going
-                                </Text>
-                            </View>
-                        </View>
-
-                        <Button
-                            buttonStyle={styles.buttonColored}
-                            onPress={() => onSubscribePress(subscriptions[0])}
-                            disabled={subscriptions === null}
-                        >
-                            Subscribe for {subscriptions ? subscriptions[0].localizedPrice : "$0000.99"}
-                        </Button>
-
-                        <Divider style={{marginBottom: 20}}/>
-
-                        <View style={styles.item}>
-                            <View style={[styles.itemIcon, styles.itemIconRed]}>
-                                <Icon name={"heart-broken"} type={"material-community"} size={50} color={"white"}/>
-                            </View>
-                            <View style={styles.itemText}>
-                                <Text h4>Free { currentSubscription === null && "(Yours)"}</Text>
-                                <Text>
-                                    - Ads displayed in app
-                                </Text>
-                                <Text>
-                                    - Syncs performed every two hours
-                                </Text>
-                                <Text>
-                                    - Must re-visit app every three days to keep syncs going
-                                </Text>
-                            </View>
-                        </View>
+            <View style={styles.content}>
+                <View style={styles.item}>
+                    <View style={styles.itemIcon}>
+                        <Icon name={"local-fire-department"} type={"material"} size={50} color={"white"}/>
                     </View>
-                ) : (
-                    <>
+                    <View style={styles.itemText}>
+                        <Text h4>Turbo {currentSubscription?.subscription_type === SubscriptionType.TURBO && "(Yours)"}</Text>
+                        <Text>
+                            - Syncs performed every 5 minutes
+                        </Text>
+                        <Text>
+                            - Run up to three swaps at once
+                        </Text>
+                        <Text>
+                            - All features of Plus
+                        </Text>
+                        <Text>
+                            - All future features with no limitations
+                        </Text>
+                    </View>
+                </View>
 
-                    </>
-                )
-            }
-        </View>
+                <Button
+                    buttonStyle={styles.buttonColored}
+                    onPress={() => onSubscribePress(turboSubscription)}
+                    disabled={turboSubscription === null || currentSubscription?.subscription_type === SubscriptionType.TURBO}
+                >
+                    Subscribe for {turboSubscription ? turboSubscription["localizedPrice"] : "$2.99"}
+                </Button>
+                {/**/}
+                <Divider style={{marginBottom: 20}}/>
+
+                <View style={styles.item}>
+                    <View style={[styles.itemIcon, styles.itemIconYellow]}>
+                        <Icon name={"auto-awesome"} type={"material"} size={50} color={"white"}/>
+                    </View>
+                    <View style={styles.itemText}>
+                        <Text h4>Plus {currentSubscription?.subscription_type === SubscriptionType.PLUS && "(Yours)"}</Text>
+                        <Text>
+                            Enjoy the same TuneSwap experience without ads.
+                        </Text>
+                        <Text>
+                            - No need to re-visit the app to keep syncs going
+                        </Text>
+                    </View>
+                </View>
+
+                <Button
+                    buttonStyle={styles.buttonColored}
+                    onPress={() => onSubscribePress(plusSubscription)}
+                    // disabled={plusSubscription === null || currentSubscription?.subscription_type === SubscriptionType.PLUS}
+                >
+                    Subscribe for {plusSubscription ? plusSubscription["localizedPrice"] : "$0.99"}
+                </Button>
+
+                <Divider style={{marginBottom: 20}}/>
+
+                <View style={styles.item}>
+                    <View style={[styles.itemIcon, styles.itemIconRed]}>
+                        <Icon name={"heart-broken"} type={"material-community"} size={50} color={"white"}/>
+                    </View>
+                    <View style={styles.itemText}>
+                        <Text h4>Free { currentSubscription === null && "(Yours)"}</Text>
+                        <Text>
+                            - Ads displayed in app
+                        </Text>
+                        <Text>
+                            - Syncs performed every two hours
+                        </Text>
+                        <Text>
+                            - Must re-visit app every three days to keep syncs going
+                        </Text>
+                    </View>
+                </View>
+                {
+                    currentSubscription !== null && (
+                        <Button
+                            buttonStyle={styles.buttonColored}
+                            onPress={() => {
+                                if(Platform.OS === "ios") deepLinkToSubscriptionsIos().then();
+                                else deepLinkToSubscriptionsAndroid({sku: "com.gkasdorf.tuneswap.plus"}).then();
+                            }}
+                        >
+                            Cancel Subscription
+                        </Button>
+                    )
+                }
+            </View>
+        </ScrollView>
     );
 };
 

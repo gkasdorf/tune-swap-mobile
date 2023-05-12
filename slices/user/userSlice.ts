@@ -5,7 +5,8 @@ interface User {
     name: string;
     email: string;
     isAuthed: boolean;
-    token: string
+    token: string;
+    subscribed: boolean;
 }
 
 interface UserState {
@@ -17,7 +18,8 @@ const initialState: UserState = {
         name: "",
         email: "",
         isAuthed: false,
-        token: ""
+        token: "",
+        subscribed: false
     }
 };
 
@@ -30,17 +32,22 @@ const userSlice = createSlice({
             state.user.email = action.payload.email;
             state.user.isAuthed = true;
             state.user.token = action.payload.token;
+            state.user.subscribed = action.payload.subscribed;
+        },
+        setUserSubscribed: (state: UserState, action: PayloadAction<boolean>) => {
+            state.user.subscribed = action.payload;
         },
         clearUser: (state: UserState) => {
             state.user.name = "";
             state.user.email = "";
             state.user.isAuthed = false;
             state.user.token = "";
+            state.user.subscribed = false;
         }
     }
 });
 
 export const selectUser = (state: RootState) => state.user.user;
 
-export const {setUser, clearUser} = userSlice.actions;
+export const {setUser, setUserSubscribed, clearUser} = userSlice.actions;
 export default userSlice.reducer;

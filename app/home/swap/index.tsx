@@ -8,6 +8,8 @@ import SwapApi from "../../../api/swap/SwapApi";
 import NewSwapButton from "../../../ui/components/NewSwapButton";
 import {BannerAd, BannerAdSize, TestIds} from "react-native-google-mobile-ads";
 import Constants from "expo-constants";
+import {useAppSelector} from "../../../hooks";
+import {selectUser} from "../../../slices/user/userSlice";
 
 const bannerAdUnitId = __DEV__ ? TestIds.BANNER : Constants.expoConfig.extra.admobBannerId;
 
@@ -15,6 +17,8 @@ const SwapsScreen = () => {
     const [swaps, setSwaps] = useState(null);
     const [loading, setLoading] = useState(false);
     const [hasTwo, setHasTwo] = useState(false);
+
+    const {subscribed} = useAppSelector(selectUser);
 
     const router = useRouter();
 
@@ -40,7 +44,7 @@ const SwapsScreen = () => {
     const swapItem = (obj) => {
         const swap = obj.item;
 
-        if (swap.type === "ad") {
+        if (swap.type === "ad" && !subscribed) {
             return (
                 <View key={swap.key}>
                     <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>

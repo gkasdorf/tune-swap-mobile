@@ -12,8 +12,6 @@ const Home = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        console.log("Here we are.");
-
         if (!navigationState?.key) {
             return;
         }
@@ -22,13 +20,6 @@ const Home = () => {
     }, [navigationState?.key]);
 
     useEffect(() => {
-
-        // if(error && !loading) {
-        //     router.replace("landing/login");
-        // } else if(success) {
-        //     router.replace("/home/swap");
-        // }
-
         if (error) {
             router.replace("/landing/login");
         } else if (success) {

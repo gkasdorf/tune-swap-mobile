@@ -18,7 +18,8 @@ export const signup = createAsyncThunk(
         thunkAPI.dispatch(setUser({
             email: res.data.data.email,
             name: res.data.data.name,
-            token: res.data.data.api_token
+            token: res.data.data.api_token,
+            subscribed: res.data.data.subscribed
         }));
 
         return res.data;
@@ -39,7 +40,8 @@ export const login = createAsyncThunk(
         thunkAPI.dispatch(setUser({
             email: res.data.data.email,
             name: res.data.data.name,
-            token: res.data.data.api_token
+            token: res.data.data.api_token,
+            subscribed: res.data.data.subscribed
         }));
 
         return res.data;
@@ -51,6 +53,8 @@ export const loadUser = createAsyncThunk(
     async (data: { token: string }, thunkAPI) => {
         const res = await UserApi.verify();
 
+        console.log(res);
+
         if (!res.success) {
             return thunkAPI.rejectWithValue(res.message);
         }
@@ -58,7 +62,8 @@ export const loadUser = createAsyncThunk(
         thunkAPI.dispatch(setUser({
             email: res.data.user.email,
             name: res.data.user.name,
-            token: res.data.user.token
+            token: res.data.user.token,
+            subscribed: res.data.user.subscribed
         }));
     }
 );
