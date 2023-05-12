@@ -49,6 +49,7 @@
     "react-native-device-info": "^10.6.0",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-google-mobile-ads": "^10.0.1",
+    "react-native-iap": "^12.10.5",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",

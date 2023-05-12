@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, Linking, ScrollView, StyleSheet} from "react-native";
 import {Text} from "@rneui/themed";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -23,6 +23,8 @@ import {
 import Constants from "expo-constants";
 
 const SettingsScreen = () => {
+    const [emailTaps, setEmailTaps] = useState(0);
+
     const user = useAppSelector(selectUser);
 
     const router = useRouter();
@@ -138,7 +140,26 @@ const SettingsScreen = () => {
                         cellStyle={"RightDetail"}
                         title={"Email"}
                         detail={user.email}
+                        onPress={() => {
+                            if(emailTaps < 10) {
+                                setEmailTaps((prev) => prev + 1);
+                            }
+                        }}
                     />
+                    <Cell
+                        cellStyle={"RightDetail"}
+                        title={"Subscription"}
+                        detail={"None"}
+                        accessory={"DisclosureIndicator"}
+                        onPress={() => router.push("home/settings/subscription")}
+                    />
+                </Section>
+
+                <Section
+                    roundedCorners={true}
+                    hideSurroundingSeparators={true}
+                    header={"ACCOUNT SETTINGS"}
+                >
                     <Cell
                         title={"Notifications"}
                         accessory={"DisclosureIndicator"}
@@ -203,7 +224,7 @@ const SettingsScreen = () => {
                 </Section>
 
                 {
-                    __DEV__ && (
+                    emailTaps >= 10 && (
                         <Section
                             roundedCorners={true}
                             hideSurroundingSeparators={true}
@@ -218,6 +239,10 @@ const SettingsScreen = () => {
                                 title={"Token"}
                                 cellStyle={"RightDetail"}
                                 detail={user.token}
+                                accessory={"DisclosureIndicator"}
+                                onPress={() => {
+                                    Alert.alert("User", JSON.stringify(user));
+                                }}
                             />
                             <Cell
                                 title={"Do It"}
@@ -225,7 +250,7 @@ const SettingsScreen = () => {
                                 onPress={async () => {
                                     console.log("Running DOIT");
 
-                                    await AsyncStorage.removeItem("@deviceToken");
+                                    //await AsyncStorage.removeItem("@deviceToken");
                                 }}
                             />
                         </Section>

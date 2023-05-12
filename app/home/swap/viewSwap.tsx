@@ -9,6 +9,8 @@ import LoadingModal from "../../../ui/LoadingModal";
 import SwapStatus from "../../../api/enums/SwapStatus";
 import {AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds} from "react-native-google-mobile-ads";
 import Constants from "expo-constants";
+import {useAppSelector} from "../../../hooks";
+import {selectUser} from "../../../slices/user/userSlice";
 
 const bannerAdUnitId = __DEV__ ? TestIds.BANNER : Constants.expoConfig.extra.admobBannerId;
 // eslint-disable-next-line no-undef
@@ -29,6 +31,8 @@ const ViewSwapScreen = () => {
     const {id, isNew} = useSearchParams();
     const router = useRouter();
 
+    const {subscribed} = useAppSelector(selectUser);
+
     let reload = null;
     let unsubscribe = null;
 
@@ -48,7 +52,7 @@ const ViewSwapScreen = () => {
     useFocusEffect(useCallback(() => {
         loadSwap().then();
 
-        if (isNew) {
+        if (isNew && !subscribed) {
             unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
                 setAdLoaded(true);
             });
@@ -174,7 +178,11 @@ const ViewSwapScreen = () => {
                         {
                             !__DEV__ && (
                                 <View style={{alignItems: "center", marginTop: 20}}>
-                                    <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.MEDIUM_RECTANGLE} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
+                                    {
+                                        !subscribed && (
+                                            <BannerAd unitId={bannerAdUnitId} size={BannerAdSize.MEDIUM_RECTANGLE} requestOptions={{requestNonPersonalizedAdsOnly: true}}/>
+                                        )
+                                    }
                                 </View>
                             )
                         }
