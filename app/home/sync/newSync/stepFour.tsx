@@ -15,7 +15,6 @@ const SyncStepTwoScreen = () => {
     const sync = useAppSelector(selectSync);
 
     const router = useRouter();
-    const dispatch = useAppDispatch();
 
     const onPlaylistPress = async (id: string) => {
         setLoading(true);
