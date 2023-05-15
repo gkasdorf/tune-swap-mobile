@@ -29,10 +29,7 @@ class SpotifyApi {
     public static getUserPlaylists = async (): Promise<GetUserPlaylistsResponse> => {
         const api = new Api("/v2/spotify/me/playlists");
 
-        const x = await api.get() as GetUserPlaylistsResponse;
-        console.log("WADDUP", x);
-
-        return x as GetUserPlaylistsResponse;
+        return await api.get() as GetUserPlaylistsResponse;
     };
 }
 
