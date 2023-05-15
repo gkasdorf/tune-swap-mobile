@@ -1,10 +1,12 @@
 import React, {useCallback, useState} from "react";
-import {useFocusEffect, useRouter} from "expo-router";
+import {Stack, useFocusEffect, useRouter} from "expo-router";
 import syncApi from "../../../api/sync/SyncApi";
-import {Alert, FlatList, StyleSheet, View} from "react-native";
+import {Alert, Button, FlatList, StyleSheet, View} from "react-native";
 import {ListItem} from "@rneui/themed";
 import LoadingModal from "../../../ui/LoadingModal";
 import {ListItemChevron} from "@rneui/base/dist/ListItem/ListItem.Chevron";
+import UserApi from "../../../api/user/UserApi";
+import {GetActiveSyncsResponse} from "../../../api/user/types/responses/UserApiResponses";
 
 const SyncsScreen = () => {
     const [syncs, setSyncs] = useState(null);
@@ -55,8 +57,61 @@ const SyncsScreen = () => {
         );
     };
 
+    const onNewSyncPress = async (): Promise<void> => {
+        setLoading(true);
+
+        const res: GetActiveSyncsResponse = await UserApi.getActiveSyncCount();
+
+        setLoading(false);
+
+        if(!res.success) {
+            Alert.alert("Error", res.message);
+            return;
+        }
+
+        console.log(res);
+
+        const allowedTotal = __DEV__ ? 1 : 5;
+
+        if(res.data.total >= allowedTotal && !res.data.isTurbo) {
+            Alert.alert("Too Many Syncs", "You may only have up to five active syncs.\n\nTurbo users may" +
+                " have unlimited active syncs. If you would like to upgrade, press the button below. Otherwise, disable" +
+                " one of your active syncs before continuing.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Upgrade",
+                    onPress: () => {
+                        router.push("/home/settings/subscription");
+                    },
+                    style: "default"
+                }
+            ]);
+
+            return;
+        }
+
+        router.push("/home/sync/newSync/stepOne");
+    };
+
     return (
         <View style={styles.main}>
+            <Stack.Screen
+                options={{
+                    headerRight: () => {
+                        return (
+                            <Button
+                                title={"New Sync"}
+                                onPress={onNewSyncPress}
+                            />
+                        );
+                    }
+                }}
+            />
+
             <LoadingModal loading={loading}/>
 
             <FlatList
