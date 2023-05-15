@@ -1,6 +1,12 @@
 import ApiResponse from "../ApiResponse";
 import Api from "../Api";
-import {IsRunningResponse, LoginResponse, SignupResponse, VerifyResponse} from "./types/responses/UserApiResponses";
+import {
+    GetActiveSyncsResponse,
+    IsRunningResponse,
+    LoginResponse,
+    SignupResponse,
+    VerifyResponse
+} from "./types/responses/UserApiResponses";
 import {AppleLoginRequest, LoginRequest, SignupRequest} from "./types/requests/UserApiRequests";
 
 class UserApi {
@@ -69,6 +75,12 @@ class UserApi {
         const api: Api = new Api("/v2/user/running");
 
         return await api.get() as IsRunningResponse;
+    };
+
+    public static getActiveSyncCount = async (): Promise<GetActiveSyncsResponse> => {
+        const api: Api = new Api("/v2/user/syncs/active");
+
+        return await api.get() as GetActiveSyncsResponse;
     };
 }
 

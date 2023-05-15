@@ -38,3 +38,10 @@ export interface IsRunningResponse extends ApiResponse {
         running: boolean
     }
 }
+
+export interface GetActiveSyncsResponse extends ApiResponse {
+    data: {
+        total: number,
+        isTurbo: boolean
+    }
+}
