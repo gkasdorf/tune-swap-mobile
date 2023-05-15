@@ -20,6 +20,12 @@ class SyncApi {
 
         return await api.get() as GetSyncResponse;
     };
+
+    public static setSyncing = async (id: string): Promise<GetSyncResponse> => {
+        const api = new Api(`/v2/sync/${id}/syncing`);
+
+        return await api.get() as GetSyncResponse;
+    };
 }
 
 export default SyncApi;
