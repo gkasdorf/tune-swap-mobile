@@ -9,7 +9,6 @@ import {Sync} from "../../../api/types/SyncTypes";
 import StatusIcon, {StatusIconVariant} from "../../../ui/StatusIcon";
 import {parseTimestamp} from "../../../helpers/timeHelpers";
 import SubscriptionType from "../../../api/enums/SubscriptionType";
-import {ListItemChevron} from "@rneui/base/dist/ListItem/ListItem.Chevron";
 
 const SyncScreen = () => {
     const [sync, setSync] = useState<Sync|null>(null);
@@ -33,8 +32,6 @@ const SyncScreen = () => {
             Alert.alert("Error", res.message);
             return;
         }
-
-        console.log(res.data);
 
         setSync(res.data.sync);
         setNextCheck(res.data.nextCheck);
@@ -96,7 +93,11 @@ const SyncScreen = () => {
                             }
                         </Text>
                         <Text style={{textAlign: "center"}}>
-                            Sync between {sync.from_playlist.name} and {sync.to_playlist.name}
+                            {
+                                sync.from_playlist && (
+                                    "Sync between " + sync.from_playlist.name + " and " + sync.to_playlist.name
+                                )
+                            }
                         </Text>
 
                         <View style={styles.status}>

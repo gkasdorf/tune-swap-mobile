@@ -33,7 +33,7 @@ const SyncStepTwoScreen = () => {
         }
 
         setLoading(false);
-        router.push({pathname: "/home/sync/viewSync", params: {id: res.data.sync.id.toString()}});
+        router.push({pathname: "/home/sync/viewSync", params: {id: res.data.sync.id.toString(), isNew: true}});
     };
 
     return (
