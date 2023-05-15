@@ -2,7 +2,7 @@ import React from "react";
 import {ActivityIndicator, StyleSheet, View} from "react-native";
 import {Icon} from "@rneui/base";
 
-export type StatusIconVariant = "success" | "error" | "pending";
+export type StatusIconVariant = "success" | "error" | "pending" | "paused" | "syncing";
 
 type StatusIconProps = {
     variant: StatusIconVariant
@@ -23,6 +23,14 @@ const StatusIcon = ({variant}: StatusIconProps) => {
             break;
         case "pending":
             iconStyles.push(styles.pending);
+            icon = ["sync", "material"];
+            break;
+        case "paused":
+            iconStyles.push(styles.paused);
+            icon = ["pause", "material"];
+            break;
+        case "syncing":
+            iconStyles.push(styles.success);
             icon = ["sync", "material"];
             break;
     }
@@ -70,6 +78,10 @@ const styles = StyleSheet.create({
     pending: {
         backgroundColor: "lightblue",
         transform: [{rotate: "45deg"}]
+    },
+
+    paused: {
+        backgroundColor: "lightgrey"
     }
 });
 
