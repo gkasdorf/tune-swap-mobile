@@ -4,8 +4,10 @@ export interface Sync {
     user_id: number,
     syncing: boolean,
     id: number,
+    last_checked: string,
+    last_synced: string,
     from_playlist_id: string,
     to_playlist_id: string
-    from_playlist: Playlist,
-    to_playlist: Playlist
+    from_playlist?: Playlist,
+    to_playlist?: Playlist
 }
