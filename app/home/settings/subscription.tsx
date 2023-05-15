@@ -197,7 +197,7 @@ const SubscriptionScreen = () => {
                 <Button
                     buttonStyle={styles.buttonColored}
                     onPress={() => onSubscribePress(plusSubscription)}
-                    // disabled={plusSubscription === null || currentSubscription?.subscription_type === SubscriptionType.PLUS}
+                    disabled={plusSubscription === null || currentSubscription?.subscription_type === SubscriptionType.PLUS}
                 >
                     Subscribe for {plusSubscription ? plusSubscription["localizedPrice"] : "$0.99"}
                 </Button>
