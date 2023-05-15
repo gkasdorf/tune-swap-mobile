@@ -1,5 +1,6 @@
 import ApiResponse from "../../ApiResponse";
 import {Sync} from "../../types/SyncTypes";
+import SubscriptionType from "../../enums/SubscriptionType";
 
 export interface CreateSyncResponse extends ApiResponse {
     data: {
@@ -15,6 +16,8 @@ export interface GetAllSyncsResponse extends ApiResponse {
 
 export interface GetSyncResponse extends ApiResponse {
     data: {
-        sync: Sync
+        sync: Sync,
+        subscription?: SubscriptionType,
+        nextCheck: string
     }
 }
