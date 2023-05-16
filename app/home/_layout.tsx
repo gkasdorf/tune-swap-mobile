@@ -29,6 +29,17 @@ const HomeLayout = () => {
                 />
 
                 <Tabs.Screen
+                    name={"sync"}
+                    options={{
+                        headerShown: false,
+                        tabBarLabel: "Sync",
+                        tabBarIcon: ({color}) => (
+                            <Icon name={"sync"} type={"material"} color={color}/>
+                        )
+                    }}
+                />
+
+                <Tabs.Screen
                     name={"settings"}
                     options={{
                         headerShown: false,

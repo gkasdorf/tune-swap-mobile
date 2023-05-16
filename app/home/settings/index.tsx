@@ -241,6 +241,7 @@ const SettingsScreen = () => {
                                 detail={user.token}
                                 accessory={"DisclosureIndicator"}
                                 onPress={() => {
+                                    console.log(user.token);
                                     Alert.alert("User", JSON.stringify(user));
                                 }}
                             />
