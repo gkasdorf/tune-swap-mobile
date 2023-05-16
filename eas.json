@@ -20,6 +20,9 @@
         "ANDROID_ADMOB_APP_ID": "ca-app-pub-6422592423352564~6022605332",
         "ANDROID_ADMOB_BANNER_ID": "ca-app-pub-6422592423352564/4539138866",
         "ANDROID_ADMOB_INTER_ID": "ca-app-pub-6422592423352564/8672172602"
+      },
+      "android": {
+        "image": "latest"
       }
     },
     "development-simulator": {

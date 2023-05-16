@@ -74,7 +74,9 @@ export default {
                         "extraProguardRules": "-keep class com.google.android.gms.internal.consent_sdk.** { *; }"
                     }
                 }
-            ]
+            ],
+            "./plugins/withAndroidStrategiesPlugin.js",
+            "react-native-iap"
         ]
     },
     "react-native-google-mobile-ads": {
