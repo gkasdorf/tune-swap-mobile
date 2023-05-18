@@ -21,7 +21,7 @@ export default {
         "ios": {
             "supportsTablet": false,
             "bundleIdentifier": "com.gkasdorf.tuneswap",
-            "buildNumber": "16",
+            "buildNumber": "17",
             "associatedDomains": ["applinks:tuneswap.app"]
         },
         "android": {
@@ -40,8 +40,8 @@ export default {
                     "category": ["BROWSABLE", "DEFAULT"]
                 }
             ],
-            "buildNumber": "15",
-            "versionCode": "15"
+            "buildNumber": "17",
+            "versionCode": "17"
         },
         "web": {
             "favicon": "./assets/favicon.png"
