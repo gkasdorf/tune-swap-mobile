@@ -21,6 +21,7 @@ import {Subscription} from "../../../api/types/SubscriptionTypes";
 import SubscriptionType from "../../../api/enums/SubscriptionType";
 import {useAppDispatch} from "../../../hooks";
 import {setUserSubscribed} from "../../../slices/user/userSlice";
+import {VerifyReceiptAndroidRequest} from "../../../api/user/types/requests/SubscriptionApiRequests";
 
 const SubscriptionScreen = () => {
     // This is going to be the current subscription of the user
@@ -82,7 +83,15 @@ const SubscriptionScreen = () => {
                 // Complete the transaction
                 finishTransaction({purchase, isConsumable: false}).then(() => {
                     // Make the verification request
-                    verifyReceiptIos(receipt);
+
+                    if(Platform.OS === "ios")
+                        verifyReceiptIos(receipt);
+                    else
+                        verifyReceiptAndroid({
+                            packageName: purchase.packageNameAndroid,
+                            productId: purchase.productId,
+                            receipt
+                        });
                 }).catch((err) => {
                     setSuccess(false);
                     Alert.alert("Error", err.message);
@@ -120,7 +129,12 @@ const SubscriptionScreen = () => {
         setLoading(true);
 
         // Attempt the transaction
-        requestSubscription({sku: subscription.productId, andDangerouslyFinishTransactionAutomaticallyIOS: false}).catch((err) => {
+        requestSubscription(
+            {
+                sku: subscription.productId,
+                andDangerouslyFinishTransactionAutomaticallyIOS: false,
+                subscriptionOffers: [{offerToken: "", sku: subscription.productId}]
+            }).catch((err) => {
             setLoading(false);
             Alert.alert("Error", err.message);
         });
@@ -138,8 +152,20 @@ const SubscriptionScreen = () => {
         }
 
         setLoading(false);
+        setSuccess(true);
+    };
 
-        // If we get a successful response we will update the user's subscription
+    const verifyReceiptAndroid = async(data: VerifyReceiptAndroidRequest) => {
+        const res = await SubscriptionApi.verifyReceiptAndroid(data);
+
+        if(!res.success) {
+            Alert.alert("Error", res.data.message);
+            setLoading(false);
+            setSuccess(false);
+            return;
+        }
+
+        setLoading(false);
         setSuccess(true);
     };
 
@@ -172,9 +198,15 @@ const SubscriptionScreen = () => {
                 <Button
                     buttonStyle={styles.buttonColored}
                     onPress={() => onSubscribePress(turboSubscription)}
-                    disabled={turboSubscription === null || currentSubscription?.subscription_type === SubscriptionType.TURBO}
+                    disabled={!__DEV__ && turboSubscription !== null && currentSubscription?.subscription_type === SubscriptionType.TURBO}
                 >
-                    Subscribe for {turboSubscription ? turboSubscription["localizedPrice"] : "$2.99"}
+                    Subscribe for {
+                        turboSubscription ? (
+                            Platform.OS === "ios" ?
+                                turboSubscription["localizedPrice"] :
+                                turboSubscription["subscriptionOfferDetails"][0]["pricingPhases"]["pricingPhaseList"][0]["formattedPrice"]
+                        ) : "$2.99"
+                    }
                 </Button>
                 {/**/}
                 <Divider style={{marginBottom: 20}}/>
@@ -197,9 +229,15 @@ const SubscriptionScreen = () => {
                 <Button
                     buttonStyle={styles.buttonColored}
                     onPress={() => onSubscribePress(plusSubscription)}
-                    disabled={plusSubscription === null || currentSubscription?.subscription_type === SubscriptionType.PLUS}
+                    disabled={!__DEV__ && plusSubscription !== null}
                 >
-                    Subscribe for {plusSubscription ? plusSubscription["localizedPrice"] : "$0.99"}
+                    Subscribe for {
+                        plusSubscription ? (
+                            Platform.OS === "ios" ?
+                                plusSubscription["localizedPrice"] :
+                                plusSubscription["subscriptionOfferDetails"][0]["pricingPhases"]["pricingPhaseList"][0]["formattedPrice"]
+                        ) : "$0.99"
+                    }
                 </Button>
 
                 <Divider style={{marginBottom: 20}}/>
