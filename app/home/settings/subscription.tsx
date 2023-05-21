@@ -5,6 +5,7 @@ import {useFocusEffect} from "expo-router";
 import {Button, Divider, Text} from "@rneui/themed";
 import {Icon} from "@rneui/base";
 import {
+    clearTransactionIOS,
     deepLinkToSubscriptionsAndroid,
     deepLinkToSubscriptionsIos,
     endConnection,
@@ -107,6 +108,10 @@ const SubscriptionScreen = () => {
         getSubscriptions({skus: ["com.gkasdorf.tuneswap.plus", "com.gkasdorf.tuneswap.turbo"]}).then((res) => {
             setTurboSubscription(res.find((item) => item.productId === "com.gkasdorf.tuneswap.turbo"));
             setPlusSubscription(res.find((item) => item.productId === "com.gkasdorf.tuneswap.plus"));
+        });
+
+        clearTransactionIOS().then().catch(err => {
+            console.log(err);
         });
     };
 
