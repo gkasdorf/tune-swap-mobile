@@ -59,9 +59,7 @@ const SyncsScreen = () => {
 
     const onNewSyncPress = async (): Promise<void> => {
         setLoading(true);
-
         const res: GetActiveSyncsResponse = await UserApi.getActiveSyncCount();
-
         setLoading(false);
 
         if(!res.success) {
@@ -69,9 +67,7 @@ const SyncsScreen = () => {
             return;
         }
 
-        console.log(res);
-
-        const allowedTotal = __DEV__ ? 1 : 5;
+        const allowedTotal = __DEV__ ? 1 : 3;
 
         if(res.data.total >= allowedTotal && !res.data.isTurbo) {
             Alert.alert("Too Many Syncs", "You may only have up to five active syncs.\n\nTurbo users may" +
