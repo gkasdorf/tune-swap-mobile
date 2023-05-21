@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {SplashScreen, useRootNavigationState, useRouter} from "expo-router";
+import {SplashScreen, useLocalSearchParams, useRootNavigationState, useRouter, useSearchParams} from "expo-router";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {loadUser} from "../slices/auth/authActions";
@@ -11,10 +11,14 @@ const Home = () => {
     const navigationState = useRootNavigationState();
     const dispatch = useAppDispatch();
 
+    const {redirect, data} = useLocalSearchParams();
+
     useEffect(() => {
         if (!navigationState?.key) {
             return;
         }
+
+        console.log(redirect, data);
 
         load().then();
     }, [navigationState?.key]);
@@ -23,6 +27,11 @@ const Home = () => {
         if (error) {
             router.replace("/landing/login");
         } else if (success) {
+            if(redirect) {
+                router.replace({pathname: "/home/share/newCopy", params: {id: data}});
+                return;
+            }
+
             router.replace("/home/swap");
         }
     }, [error, loading, success]);

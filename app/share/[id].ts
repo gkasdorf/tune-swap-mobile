@@ -1,16 +1,21 @@
-import {useRouter, useSearchParams} from "expo-router";
+import {useRootNavigationState, useRouter, useSearchParams} from "expo-router";
 import {useEffect} from "react";
 
 const ShareRedirect = () => {
     const {id} = useSearchParams();
-
     const router = useRouter();
 
+    const navigationState = useRootNavigationState();
+
     useEffect(() => {
-        if (id) {
-            router.replace({pathname: "/home/share/newCopy", params: {id: id as string}});
+        if (!navigationState?.key) {
+            return;
         }
-    }, [id]);
+
+        if (id) {
+            router.replace({pathname: "/", params: {redirect: "/home/share/newCopy", data: id.toString()}});
+        }
+    }, [navigationState?.key, id]);
 };
 
 export default ShareRedirect;
