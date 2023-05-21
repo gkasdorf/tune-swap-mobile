@@ -137,7 +137,7 @@ const SubscriptionScreen = () => {
         requestSubscription(
             {
                 sku: subscription.productId,
-                andDangerouslyFinishTransactionAutomaticallyIOS: false,
+                andDangerouslyFinishTransactionAutomaticallyIOS: true,
                 subscriptionOffers: [{offerToken: "", sku: subscription.productId}]
             }).catch((err) => {
             setLoading(false);
