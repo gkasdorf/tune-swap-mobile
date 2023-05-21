@@ -70,7 +70,7 @@ const SyncsScreen = () => {
         const allowedTotal = __DEV__ ? 1 : 3;
 
         if(res.data.total >= allowedTotal && !res.data.isTurbo) {
-            Alert.alert("Too Many Syncs", "You may only have up to five active syncs.\n\nTurbo users may" +
+            Alert.alert("Too Many Syncs", "You may only have up to three active syncs.\n\nTurbo users may" +
                 " have unlimited active syncs. If you would like to upgrade, press the button below. Otherwise, disable" +
                 " one of your active syncs before continuing.",
             [
