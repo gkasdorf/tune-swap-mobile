@@ -27,3 +27,7 @@ ios/tuneswapios.xcodeproj/project.pbxproj
 *.pbxproj
 *.ipa
 *.tar.gz
+
+*.apk
+
+*.aab

@@ -6,6 +6,7 @@ import {ThemeProvider} from "@rneui/themed";
 import theme from "../theme";
 import {useFonts} from "expo-font";
 import * as PushNotifications from "../notifications/PushNotifications";
+import {withIAPContext} from "react-native-iap";
 
 PushNotifications.handlers();
 
@@ -34,4 +35,4 @@ const Layout = () => {
     );
 };
 
-export default Layout;
+export default withIAPContext(Layout);
