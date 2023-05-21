@@ -137,7 +137,7 @@ const SubscriptionScreen = () => {
         requestSubscription(
             {
                 sku: subscription.productId,
-                andDangerouslyFinishTransactionAutomaticallyIOS: true,
+                andDangerouslyFinishTransactionAutomaticallyIOS: false,
                 subscriptionOffers: [{offerToken: "", sku: subscription.productId}]
             }).catch((err) => {
             setLoading(false);
@@ -234,7 +234,7 @@ const SubscriptionScreen = () => {
                 <Button
                     buttonStyle={styles.buttonColored}
                     onPress={() => onSubscribePress(plusSubscription)}
-                    disabled={!__DEV__ && plusSubscription !== null}
+                    disabled={!__DEV__ && currentSubscription !== null}
                 >
                     Subscribe for {
                         plusSubscription ? (
