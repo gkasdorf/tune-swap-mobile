@@ -110,9 +110,11 @@ const SubscriptionScreen = () => {
             setPlusSubscription(res.find((item) => item.productId === "com.gkasdorf.tuneswap.plus"));
         });
 
-        clearTransactionIOS().then().catch(err => {
-            console.log(err);
-        });
+        if(Platform.OS === "ios") {
+            clearTransactionIOS().then().catch(err => {
+                console.log(err);
+            });
+        }
     };
 
     const loadSubscription = async (): Promise<void> => {
