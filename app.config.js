@@ -5,7 +5,7 @@ export default {
     "expo": {
         "name": "TuneSwap",
         "slug": "tune-swap-ios",
-        "version": "1.3.2",
+        "version": "1.4.0",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
@@ -21,7 +21,7 @@ export default {
         "ios": {
             "supportsTablet": false,
             "bundleIdentifier": "com.gkasdorf.tuneswap",
-            "buildNumber": "17",
+            "buildNumber": "20",
             "associatedDomains": ["applinks:tuneswap.app"]
         },
         "android": {
@@ -40,8 +40,8 @@ export default {
                     "category": ["BROWSABLE", "DEFAULT"]
                 }
             ],
-            "buildNumber": "17",
-            "versionCode": "17"
+            "buildNumber": "18",
+            "versionCode": "18"
         },
         "web": {
             "favicon": "./assets/favicon.png"
